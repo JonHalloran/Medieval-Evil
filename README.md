@@ -36,5 +36,8 @@ This app will consist of two main pages.  One for battles and one for between ba
 - [ ] Finish up any remaining work from past days
 - [ ] If time add animations
 
-
+## Bonus features:
+- [ ] More elaborate backend
+- [ ] Implement leveling
+- [ ] Customizable stats
 

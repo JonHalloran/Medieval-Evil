@@ -13,8 +13,8 @@ Browser-RPG is a turn based RPG that is meant to be played in your browser.  It 
 ## Wireframes
 This app will consist of two main pages.  One for battles and one for between battles where users can interact with inventory and store.
 
-![battle screen wireframe](https://github.com/JonHalloran/Browser-RPG/blob/master/assets/battle_screen.png "Battle Screen Wireframse")
-[store/inventory wireframe](https://github.com/JonHalloran/Browser-RPG/blob/master/assets/store_inventory.png "Store/inventroy Wireframe")
+![battle screen wireframe](https://github.com/JonHalloran/Browser-RPG/blob/master/assets/battle_screen.png "Battle Screen Wireframe")
+![store/inventory wireframe](https://github.com/JonHalloran/Browser-RPG/blob/master/assets/store_inventory.png "Store/inventroy Wireframe")
 
 ## Implementation Timeline
 **Over the weekend:**

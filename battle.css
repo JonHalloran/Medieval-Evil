@@ -17,14 +17,23 @@
 }
 
 .health {
-    height: 10px;
+    height: 15px;
     background-color: red;
+    border-radius: 7.5px;
+    border: 1px solid black;
     width: 25vw;
 }
 
 .moves-list {
+    max-width: 100%;
     display: flex;
-    max-width: 100px
+    justify-content: space-around;
+    align-items: center;
+    /* padding: px; */
+    background: lightgrey;
+    border-radius: 10px;
+    border: 1px soild black;
+    margin-bottom: 10px;
 }
 
 .move {

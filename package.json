@@ -1,0 +1,21 @@
+{
+    "name": "browser-rpg",
+    "private": true,
+    "dependencies": {
+        "webpack": "^3.4.1"
+    },
+    "devDependencies": {
+        "redux-logger": "^3.0.6"
+    },
+    "engines": {
+        "node": "8.9.4",
+        "npm": "5.6.0"
+    },
+    "scripts": {
+        "postinstall": "webpack",
+        "webpack": "webpack --watch"
+    },
+    "devDependencies": {
+        "webpack-cli": "^2.0.13"
+    }
+}

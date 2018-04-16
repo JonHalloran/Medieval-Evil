@@ -1,7 +1,6 @@
 class character {
     constructor(initializaton) {
         this.attributes = initializaton.attributes;
-        this.equipment = initializaton.equipment;
         this.moves = initializaton.moves;
     }
 
@@ -16,6 +15,10 @@ class character {
 
     alive() {
         return this.attributes.hitPoints > 0;
+    }
+
+    placeCharacter() {
+        document.getElementsByClassName;
     }
 }
 

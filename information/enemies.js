@@ -1,6 +1,6 @@
 import * as moves from './moves';
 
-const goblin = {
+export const goblin = {
     moves: {
         basicAttack: moves.basicAttack
     },

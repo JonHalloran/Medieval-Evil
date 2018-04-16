@@ -1,5 +1,5 @@
 import battle from "./battle";
-import character from "./character";
-import playerTemplate from "./information/playerTemplate";
+import playerCharacter from "./playerCharacter";
+import {baseChar} from "./information/playerTemplate";
 
-document.addEventListener("DOMContentLoaded", new battle(character(playerTemplate)));
+document.addEventListener("DOMContentLoaded", new battle(new playerCharacter(baseChar)));

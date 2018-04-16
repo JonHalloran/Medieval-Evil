@@ -70,13 +70,13 @@
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__battle__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__character__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__playerCharacter__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__information_playerTemplate__ = __webpack_require__(5);
 
 
 
 
-document.addEventListener("DOMContentLoaded", new __WEBPACK_IMPORTED_MODULE_0__battle__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_1__character__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_2__information_playerTemplate__["default"])));
+document.addEventListener("DOMContentLoaded", new __WEBPACK_IMPORTED_MODULE_0__battle__["a" /* default */](new __WEBPACK_IMPORTED_MODULE_1__playerCharacter__["a" /* default */](__WEBPACK_IMPORTED_MODULE_2__information_playerTemplate__["a" /* baseChar */])));
 
 /***/ }),
 /* 1 */
@@ -84,15 +84,17 @@ document.addEventListener("DOMContentLoaded", new __WEBPACK_IMPORTED_MODULE_0__b
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__information_enemies__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__character__ = __webpack_require__(4);
+
 
 
 class battle {
     constructor(character1, character2) {
         this.player = character1;
-        this.enemy = character2 || __WEBPACK_IMPORTED_MODULE_0__information_enemies__["goblin"];
+        this.enemy = character2 || new __WEBPACK_IMPORTED_MODULE_1__character__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__information_enemies__["a" /* goblin */]);
         let timeP1 = 0;
         let timeP2 = 0;
-        this.fight(this.player, this.enemy);
+        // this.fight(this.player, this.enemy);
     }
 
     fight() {
@@ -133,12 +135,11 @@ class battle {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__moves__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__moves___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__moves__);
 
 
 const goblin = {
     moves: {
-        basicAttack: __WEBPACK_IMPORTED_MODULE_0__moves__["basicAttack"]
+        basicAttack: __WEBPACK_IMPORTED_MODULE_0__moves__["a" /* basicAttack */]
     },
 
     attributes: {
@@ -151,11 +152,14 @@ const goblin = {
 
     equipment: {}
 };
+/* harmony export (immutable) */ __webpack_exports__["a"] = goblin;
+
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 const basicAttack = (strength, attDex) => (defDex) => {
     if (Math.random() < (attDex / defDex)) {
         return {
@@ -164,6 +168,8 @@ const basicAttack = (strength, attDex) => (defDex) => {
         };
     }
 };
+/* harmony export (immutable) */ __webpack_exports__["a"] = basicAttack;
+
 
 /***/ }),
 /* 4 */
@@ -172,8 +178,10 @@ const basicAttack = (strength, attDex) => (defDex) => {
 "use strict";
 class character {
     constructor(initializaton) {
+        console.log(initializaton);
         this.attributes = initializaton.attributes;
         this.moves = initializaton.moves;
+        console.log(initializaton);
     }
 
     getMove() {
@@ -190,7 +198,7 @@ class character {
     }
 
     placeCharacter() {
-        document.getElementsByClassName;
+        // document.getElementsByClassName;
     }
 }
 
@@ -202,12 +210,11 @@ class character {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__moves__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__moves___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__moves__);
 
 
 const baseChar = {
     moves: {
-        basicAttack: __WEBPACK_IMPORTED_MODULE_0__moves__["basicAttack"]
+        basicAttack: __WEBPACK_IMPORTED_MODULE_0__moves__["a" /* basicAttack */]
     },
 
     attributes: {
@@ -220,8 +227,27 @@ const baseChar = {
 
     equipment: {}
 };
-/* unused harmony export baseChar */
+/* harmony export (immutable) */ __webpack_exports__["a"] = baseChar;
 
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__character__ = __webpack_require__(4);
+
+
+class playerCharacter extends __WEBPACK_IMPORTED_MODULE_0__character__["a" /* default */] {
+    constructor(initialization) {
+        super(initialization);
+        this.equipement = initialization.equipment;
+    }
+
+    getMove() {}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (playerCharacter);
 
 /***/ })
 /******/ ]);

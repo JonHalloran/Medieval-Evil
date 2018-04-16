@@ -1,7 +1,9 @@
 class character {
     constructor(initializaton) {
+        console.log(initializaton);
         this.attributes = initializaton.attributes;
         this.moves = initializaton.moves;
+        console.log(initializaton);
     }
 
     getMove() {
@@ -18,7 +20,7 @@ class character {
     }
 
     placeCharacter() {
-        document.getElementsByClassName;
+        // document.getElementsByClassName;
     }
 }
 

@@ -95,42 +95,55 @@ class battle {
         this.timeP1 = 0;
         this.timeP2 = 0;
         this.fight(this.player, this.enemy);
+        this.addButtons(this.player);
+    }
+
+    addButtons(player) {
+        let moves = document.querySelector(".moves-list");
+        player
+            .moves
+            .forEach(move => {
+                let moveLi = document.createElement('IMG');
+                moveLi.setAttribute('src', "./assets/actions/pointy-sword.svg");
+                moveLi.setAttribute("class", "move");
+                moveLi.addEventListener("click", () => {
+                    this.handleMove(move(this.player)(this.enemy), this.player, this.enemy);
+                    this.timeP1 -= 1;
+                    this.fight();
+                });
+                moves.appendChild(moveLi);
+            });
     }
 
     fight() {
-        while (this.player.alive() && this.enemy.alive()) {
+        while ((this.player.alive() && this.enemy.alive() && this.timeP1 < 1)) {
             this.playNextTurn();
         }
     }
 
     playNextTurn() {
-        if (this.timeP2 > -1) {
-            let moveEn = this
-                .enemy
-                .getMove(this.player);
-            this.handleMove(this.enemy, this.player);
-            console.log(moveEn);
-            this.handleMove(moveEn, this.enemy, this.player);
-            this.timeP2 -= 1;
-        } else if (this.timeP1 > -1) {
-            let movePl = this
-                .player
-                .getMove(this.enemy);
-            this.handleMove(movePl, this.player, this.enemy);
-            this.timeP1 -= 1;
-        } else {
-            this.timeP1 += this
-                .player
-                .getTime();
-            this.timeP2 += this
-                .enemy
-                .getTime();
+        console.log("pnt");
+        while (this.timeP1 < 1) {
+            if (this.timeP2 > 1) {
+                let moveEn = this
+                    .enemy
+                    .getMove(this.player);
+                this.handleMove(this.enemy, this.player);
+                console.log(moveEn);
+                this.handleMove(moveEn, this.enemy, this.player);
+                this.timeP2 -= 1;
+            } else {
+                this.timeP1 += this
+                    .player
+                    .getTime();
+                this.timeP2 += this
+                    .enemy
+                    .getTime();
 
-            console.log(this.timeP1, this.timeP2);
+                console.log("p1 time", this.timeP1, "p2 time", this.timeP2);
+            }
+
         }
-
-        this.handleHp();
-        console.log(this.player.hitPoints, this.enemy.hitPoints);
     }
 
     handleMove(move, attacker, defender) {
@@ -138,9 +151,12 @@ class battle {
         if (move.damage) {
             defender.hitPoints -= move.damage;
         }
+        this.handleHp();
+        console.log(this.player.hitPoints, this.enemy.hitPoints);
     }
 
     handleHp() {
+        console.log("HP");
         let pHealth = document.querySelector('.player-health');
         pHealth.style.width = `${ (this.player.hitPoints * 100) / this.player.attributes.constitution}%`;
         let eHealth = document.querySelector('.enemy-health');
@@ -239,7 +255,9 @@ class character {
 
 
 const baseChar = {
-    moves: [__WEBPACK_IMPORTED_MODULE_0__moves__["a" /* basicAttack */]],
+    moves: [
+        __WEBPACK_IMPORTED_MODULE_0__moves__["a" /* basicAttack */], __WEBPACK_IMPORTED_MODULE_0__moves__["a" /* basicAttack */], __WEBPACK_IMPORTED_MODULE_0__moves__["a" /* basicAttack */], __WEBPACK_IMPORTED_MODULE_0__moves__["a" /* basicAttack */]
+    ],
 
     attributes: {
         speed: 50,

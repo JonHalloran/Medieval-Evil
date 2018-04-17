@@ -1,7 +1,9 @@
 import * as moves from "./moves";
 
 export const baseChar = {
-    moves: [moves.basicAttack],
+    moves: [
+        moves.basicAttack, moves.basicAttack, moves.basicAttack, moves.basicAttack
+    ],
 
     attributes: {
         speed: 50,

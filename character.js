@@ -4,11 +4,15 @@ class character {
         this.attributes = initializaton.attributes;
         this.moves = initializaton.moves;
         console.log(initializaton);
+        this.hitPoints = this.attributes.constitution;
     }
 
-    getMove() {
-        let randomMove = this.moves[Math.floor(Math.random() * this.moves.length)];
-        return randomMove;
+    getMove(defender) {
+        console.log("moves", this.moves);
+        // let randomMove = this.moves[Math.floor(Math.random() * this.moves.length)];
+        let randomMove = this.moves[0];
+        console.log("randomMove", randomMove);
+        return randomMove(this)(defender);
     }
 
     getTime() {
@@ -16,7 +20,7 @@ class character {
     }
 
     alive() {
-        return this.attributes.hitPoints > 0;
+        return (this.hitPoints > 0);
     }
 
     placeCharacter() {

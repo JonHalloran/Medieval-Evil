@@ -1,9 +1,7 @@
 import * as moves from './moves';
 
 export const goblin = {
-    moves: {
-        basicAttack: moves.basicAttack
-    },
+    moves: [moves.basicAttack],
 
     attributes: {
         speed: 50,

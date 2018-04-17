@@ -1,8 +1,10 @@
-export const basicAttack = (strength, attDex) => (defDex) => {
-    if (Math.random() < (attDex / defDex)) {
+export const basicAttack = (attacker) => (defender) => {
+    if (Math.random() < (attacker.attributes.dexterity / defender.attributes.dexterity)) {
+        console.log("basic");
         return {
-            damage: (strength * 10),
+            damage: (attacker.attributes.strength / 10),
             damageType: "physical"
         };
     }
+    console.log("basic");
 };

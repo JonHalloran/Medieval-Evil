@@ -6,7 +6,7 @@ class playerCharacter extends character {
         this.equipement = initialization.equipment;
     }
 
-    getMove() {}
+    // getMove() {}
 }
 
 export default playerCharacter;

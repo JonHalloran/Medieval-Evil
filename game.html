@@ -1,6 +1,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="reset.css">
     <link rel="stylesheet" type="text/css" href="battle.css">
+    <!-- <script src="./bundle.js"></script> -->
     <script src="./bundle.js"></script>
 </head>
 
@@ -14,10 +15,14 @@
                 <img class="move" src="./assets/actions/pointy-sword.svg" />
                 <img class="move" src="./assets/actions/pointy-sword.svg" />
             </ul>
-            <div class="health"></div>
+            <div class="player-health-progress progress">
+                <div class="player-health health"></div>
+            </div>
         </div>
         <div class="enemy-health-and-moves">
-            <div class="health"></div>
+            <div class="enemy-health-progress progress">
+                <div class="enemy-health health"></div>
+            </div>
         </div>
     </div>
 </body>

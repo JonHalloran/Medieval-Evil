@@ -17,10 +17,16 @@
 }
 
 .health {
-    height: 15px;
+    width: 90%;
     background-color: red;
-    border-radius: 7.5px;
-    border: 1px solid black;
+    height: 20px;
+    border-radius: 10px;
+}
+
+.progress {
+    background-color: black;
+    border-radius: 13px;
+    padding: 3px;
     width: 25vw;
 }
 
@@ -37,7 +43,7 @@
 }
 
 .move {
-    min-xheight: 40px;
+    min-height: 40px;
     max-height: 60px;
     min-width: 40px;
     padding: 10px;

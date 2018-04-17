@@ -11,5 +11,7 @@ export const goblin = {
         intelligence: 50
     },
 
-    equipment: {}
+    equipment: {},
+
+    sprites: "./assets/sprites/goblin.png"
 };

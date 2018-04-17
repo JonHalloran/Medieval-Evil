@@ -76,7 +76,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-document.addEventListener("DOMContentLoaded", () => new __WEBPACK_IMPORTED_MODULE_0__battle__["a" /* default */](new __WEBPACK_IMPORTED_MODULE_1__playerCharacter__["a" /* default */](__WEBPACK_IMPORTED_MODULE_2__information_playerTemplate__["a" /* baseChar */])));
+document.addEventListener("DOMContentLoaded", () => startGame());
+
+const startGame = () => {
+    let player = new __WEBPACK_IMPORTED_MODULE_1__playerCharacter__["a" /* default */](__WEBPACK_IMPORTED_MODULE_2__information_playerTemplate__["a" /* baseChar */]);
+    new __WEBPACK_IMPORTED_MODULE_0__battle__["a" /* default */](player);
+};
 
 /***/ }),
 /* 1 */
@@ -96,6 +101,7 @@ class battle {
         this.timeP2 = 0;
         this.fight(this.player, this.enemy);
         this.addButtons(this.player);
+        this.renderChar(this.enemy);
     }
 
     addButtons(player) {
@@ -164,6 +170,14 @@ class battle {
 
     }
 
+    renderChar(char) {
+        console.log(char);
+        let div = document.querySelector(".enemy");
+        let bIm = `url(${char.sprites})`;
+        console.log(bIm);
+        div.style.backgroundImage = bIm;
+        div.style.backgroundPosition = "0 1000px";
+    }
 }
 /* harmony default export */ __webpack_exports__["a"] = (battle);
 
@@ -186,7 +200,9 @@ const goblin = {
         intelligence: 50
     },
 
-    equipment: {}
+    equipment: {},
+
+    sprites: "./assets/sprites/goblin.png"
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = goblin;
 
@@ -221,6 +237,7 @@ class character {
         this.moves = initializaton.moves;
         console.log(initializaton);
         this.hitPoints = this.attributes.constitution;
+        this.sprites = initializaton.sprites;
     }
 
     getMove(defender) {

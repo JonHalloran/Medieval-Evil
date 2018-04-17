@@ -5,6 +5,7 @@ class character {
         this.moves = initializaton.moves;
         console.log(initializaton);
         this.hitPoints = this.attributes.constitution;
+        this.sprites = initializaton.sprites;
     }
 
     getMove(defender) {

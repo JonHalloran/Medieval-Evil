@@ -9,6 +9,7 @@ class battle {
         this.timeP2 = 0;
         this.fight(this.player, this.enemy);
         this.addButtons(this.player);
+        this.renderChar(this.enemy);
     }
 
     addButtons(player) {
@@ -77,5 +78,13 @@ class battle {
 
     }
 
+    renderChar(char) {
+        console.log(char);
+        let div = document.querySelector(".enemy");
+        let bIm = `url(${char.sprites})`;
+        console.log(bIm);
+        div.style.backgroundImage = bIm;
+        div.style.backgroundPosition = "0 1000px";
+    }
 }
 export default battle;

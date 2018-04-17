@@ -49,3 +49,16 @@
     padding: 10px;
     color: red;
 }
+
+.characters {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.character {
+    height: 100px;
+    width: 100px;
+    zoom: 400%;
+}

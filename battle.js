@@ -1,15 +1,20 @@
-import {goblin} from "./information/enemies";
+import {goblin, darkElf, evilWizard} from "./information/enemies";
 import character from "./character";
 
 class battle {
     constructor(character1, character2) {
         this.player = character1;
-        this.enemy = character2 || new character(goblin);
+        this.enemy = character2 || new character(evilWizard);
         this.timeP1 = 0;
         this.timeP2 = 0;
         this.fight(this.player, this.enemy);
         this.addButtons(this.player);
-        this.renderChar(this.enemy);
+        this
+            .player
+            .renderChar("player");
+        this
+            .enemy
+            .renderChar("enemy");
     }
 
     addButtons(player) {
@@ -24,6 +29,9 @@ class battle {
                     this.handleMove(move(this.player)(this.enemy), this.player, this.enemy);
                     this.timeP1 -= 1;
                     this.fight();
+                    this
+                        .player
+                        .getMove();
                 });
                 moves.appendChild(moveLi);
             });
@@ -53,10 +61,7 @@ class battle {
                 this.timeP2 += this
                     .enemy
                     .getTime();
-
-                console.log("p1 time", this.timeP1, "p2 time", this.timeP2);
             }
-
         }
     }
 
@@ -71,20 +76,10 @@ class battle {
 
     handleHp() {
         console.log("HP");
-        let pHealth = document.querySelector('.player-health');
+        let pHealth = document.getElementsByClassName(this.player.identifier)[0];
         pHealth.style.width = `${ (this.player.hitPoints * 100) / this.player.attributes.constitution}%`;
-        let eHealth = document.querySelector('.enemy-health');
+        let eHealth = document.getElementsByClassName(this.enemy.identifier)[0];
         eHealth.style.width = `${ (this.enemy.hitPoints * 100) / this.enemy.attributes.constitution}%`;
-
-    }
-
-    renderChar(char) {
-        console.log(char);
-        let div = document.querySelector(".enemy");
-        let bIm = `url(${char.sprites})`;
-        console.log(bIm);
-        div.style.backgroundImage = bIm;
-        div.style.backgroundPosition = "0 1000px";
     }
 }
 export default battle;

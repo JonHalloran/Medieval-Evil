@@ -6,7 +6,9 @@ class playerCharacter extends character {
         this.equipement = initialization.equipment;
     }
 
-    // getMove() {}
+    getMove() {
+        this.renderAction(this.rendStart, this.rendStep);
+    }
 }
 
 export default playerCharacter;

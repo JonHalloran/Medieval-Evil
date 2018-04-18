@@ -5,26 +5,16 @@
     <script src="./bundle.js"></script>
 </head>
 
-<body class="background" s>
-    <div class="balance"></div>
-    <div class="characters">
-        <div class="player character"></div>
-        <div class="enemy character">
-
-        </div>
+<body class="background">
+    <div class="sky"> </div>
+    <div class="battlefield">
+        <ul class="player-chars chars"></ul>
+        <ul class="enemy-chars chars">
+            <!-- <canvas id="enemy-canvas"></canvas> -->
+        </ul>
     </div>
-    <div class="health-bars-and-moves">
-        <div class="your-health-and-moves">
-            <ul class="moves-list">
-            </ul>
-            <div class="player-health-progress progress">
-                <div class="player-health health"></div>
-            </div>
-        </div>
-        <div class="enemy-health-and-moves">
-            <div class="enemy-health-progress progress">
-                <div class="enemy-health health"></div>
-            </div>
-        </div>
+    <div class="move-bar">
+        <div class="moves-list"></div>
+        <div class="balance-moves"></div>
     </div>
 </body>

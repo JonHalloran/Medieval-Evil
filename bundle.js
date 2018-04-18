@@ -96,12 +96,17 @@ const startGame = () => {
 class battle {
     constructor(character1, character2) {
         this.player = character1;
-        this.enemy = character2 || new __WEBPACK_IMPORTED_MODULE_1__character__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__information_enemies__["a" /* goblin */]);
+        this.enemy = character2 || new __WEBPACK_IMPORTED_MODULE_1__character__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__information_enemies__["a" /* evilWizard */]);
         this.timeP1 = 0;
         this.timeP2 = 0;
         this.fight(this.player, this.enemy);
         this.addButtons(this.player);
-        this.renderChar(this.enemy);
+        this
+            .player
+            .renderChar("player");
+        this
+            .enemy
+            .renderChar("enemy");
     }
 
     addButtons(player) {
@@ -116,6 +121,9 @@ class battle {
                     this.handleMove(move(this.player)(this.enemy), this.player, this.enemy);
                     this.timeP1 -= 1;
                     this.fight();
+                    this
+                        .player
+                        .getMove();
                 });
                 moves.appendChild(moveLi);
             });
@@ -145,10 +153,7 @@ class battle {
                 this.timeP2 += this
                     .enemy
                     .getTime();
-
-                console.log("p1 time", this.timeP1, "p2 time", this.timeP2);
             }
-
         }
     }
 
@@ -163,20 +168,10 @@ class battle {
 
     handleHp() {
         console.log("HP");
-        let pHealth = document.querySelector('.player-health');
+        let pHealth = document.getElementsByClassName(this.player.identifier)[0];
         pHealth.style.width = `${ (this.player.hitPoints * 100) / this.player.attributes.constitution}%`;
-        let eHealth = document.querySelector('.enemy-health');
+        let eHealth = document.getElementsByClassName(this.enemy.identifier)[0];
         eHealth.style.width = `${ (this.enemy.hitPoints * 100) / this.enemy.attributes.constitution}%`;
-
-    }
-
-    renderChar(char) {
-        console.log(char);
-        let div = document.querySelector(".enemy");
-        let bIm = `url(${char.sprites})`;
-        console.log(bIm);
-        div.style.backgroundImage = bIm;
-        div.style.backgroundPosition = "0 1000px";
     }
 }
 /* harmony default export */ __webpack_exports__["a"] = (battle);
@@ -202,9 +197,87 @@ const goblin = {
 
     equipment: {},
 
-    sprites: "./assets/sprites/goblin.png"
+    sprites: "./assets/sprites/goblin.png",
+
+    render: {
+        step: 64,
+        start: -10,
+        height: 850,
+        max: 320
+    },
+
+    death: {
+        step: 64,
+        start: -10,
+        height: 1298,
+        max: 320
+    }
 };
-/* harmony export (immutable) */ __webpack_exports__["a"] = goblin;
+/* unused harmony export goblin */
+
+
+const darkElf = {
+    moves: [__WEBPACK_IMPORTED_MODULE_0__moves__["a" /* basicAttack */]],
+
+    attributes: {
+        speed: 50,
+        strength: 50,
+        dexterity: 50,
+        constitution: 50,
+        intelligence: 50
+    },
+
+    equipment: {},
+
+    sprites: "./assets/sprites/darkElf.png",
+
+    render: {
+        step: 64,
+        start: -10,
+        height: 1106,
+        max: 800
+    },
+
+    death: {
+        step: 64,
+        start: -10,
+        height: 1298,
+        max: 320
+    }
+};
+/* unused harmony export darkElf */
+
+
+const evilWizard = {
+    moves: [__WEBPACK_IMPORTED_MODULE_0__moves__["a" /* basicAttack */]],
+
+    attributes: {
+        speed: 50,
+        strength: 50,
+        dexterity: 50,
+        constitution: 50,
+        intelligence: 50
+    },
+
+    equipment: {},
+
+    sprites: "./assets/sprites/skeleton.png",
+
+    render: {
+        step: 64,
+        start: -10,
+        height: 850,
+        max: 320
+    },
+
+    death: {
+        step: 64,
+        start: -10,
+        height: 1298,
+        max: 320
+    }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = evilWizard;
 
 
 /***/ }),
@@ -232,19 +305,30 @@ const basicAttack = (attacker) => (defender) => {
 "use strict";
 class character {
     constructor(initializaton) {
-        console.log(initializaton);
         this.attributes = initializaton.attributes;
         this.moves = initializaton.moves;
-        console.log(initializaton);
         this.hitPoints = this.attributes.constitution;
         this.sprites = initializaton.sprites;
+        this.rendStart = initializaton.render.start;
+        this.rendStep = initializaton.render.step;
+        this.rendHeight = initializaton.render.height;
+        this.rendMax = initializaton.render.max;
+        this.death = initializaton.death;
+        this.identifier = Math
+            .random()
+            .toString();
     }
 
     getMove(defender) {
-        console.log("moves", this.moves);
+        if (this.health <= 0) {
+            console.log("this death", this.death);
+            console.log("TESSSSSTTTTTTT");
+            this.renderDeath(this.death.start, this.death.step);
+        }
         // let randomMove = this.moves[Math.floor(Math.random() * this.moves.length)];
         let randomMove = this.moves[0];
         console.log("randomMove", randomMove);
+        this.renderAction(this.rendStart, this.rendStep);
         return randomMove(this)(defender);
     }
 
@@ -253,11 +337,72 @@ class character {
     }
 
     alive() {
-        return (this.hitPoints > 0);
+        if (this.hitPoints > 0) {
+            return true;
+        } else {
+            this.renderDeath(this.death.start, this.death.step);
+            return false;
+        }
     }
 
-    placeCharacter() {
-        // document.getElementsByClassName;
+    renderChar(side) {
+        let char = this;
+        let field = document.querySelector(`.${side}-chars`);
+        let charLi = document.createElement("LI");
+        charLi.setAttribute("class", "char");
+        field.appendChild(charLi);
+        let charCanvas = document.createElement('CANVAS');
+        charCanvas.setAttribute('id', char.identifier);
+        charCanvas.style.width = "200px";
+        charCanvas.style.height = "200px";
+        charLi.appendChild(charCanvas);
+        let progress = document.createElement("DIV");
+        progress.setAttribute("class", "progress");
+        charLi.appendChild(progress);
+        let health = document.createElement("DIV");
+        health.setAttribute("class", `health ${char.identifier}`);
+        progress.appendChild(health);
+        let charImg = new Image();
+        let canvas = document.getElementById(char.identifier);
+        charImg.src = char.sprites;
+        console.log(canvas);
+        console.log(charImg);
+        let context = canvas.getContext("2d");
+
+        charImg.onload = function () {
+            context.drawImage(charImg, char.rendStart, char.rendHeight, 64, 64, 0, 0, 200, 200);
+        };
+    }
+
+    renderAction(start, step) {
+        // console.log('render action', this, start);
+        let canvas = document.getElementById(this.identifier);
+        let context = canvas.getContext("2d");
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        let image = new Image();
+        image.src = this.sprites;
+
+        if (start < this.rendMax) {
+            context.drawImage(image, start, this.rendHeight, 64, 64, -0, 0, 200, 200);
+            setTimeout(() => this.renderAction((start + step), step), 100);
+        } else {
+            context.drawImage(image, this.rendStart, this.rendHeight, 64, 64, 0, 0, 200, 200);
+        }
+    }
+
+    renderDeath(start, step) {
+        console.log(this.death);
+        console.log('render death', this, start);
+        let canvas = document.getElementById(this.identifier);
+        let context = canvas.getContext("2d");
+        // context.clearRect(0, 0, canvas.width, canvas.height);
+        let image = new Image();
+        image.src = this.sprites;
+        if (start < this.death.max) {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.drawImage(image, start, this.death.height, 64, 64, -0, 0, 200, 200);
+            setTimeout(() => this.renderDeath((start + step), step), 100);
+        }
     }
 }
 
@@ -284,7 +429,16 @@ const baseChar = {
         intelligence: 50
     },
 
-    equipment: {}
+    equipment: {},
+
+    sprites: "./assets/sprites/male.png",
+
+    render: {
+        step: 192,
+        start: 60,
+        height: 1998,
+        max: 1100
+    }
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = baseChar;
 
@@ -303,7 +457,9 @@ class playerCharacter extends __WEBPACK_IMPORTED_MODULE_0__character__["a" /* de
         this.equipement = initialization.equipment;
     }
 
-    // getMove() {}
+    getMove() {
+        this.renderAction(this.rendStart, this.rendStep);
+    }
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (playerCharacter);

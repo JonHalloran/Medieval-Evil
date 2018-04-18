@@ -13,5 +13,14 @@ export const baseChar = {
         intelligence: 50
     },
 
-    equipment: {}
+    equipment: {},
+
+    sprites: "./assets/sprites/male.png",
+
+    render: {
+        step: 192,
+        start: 60,
+        height: 1998,
+        max: 1100
+    }
 };

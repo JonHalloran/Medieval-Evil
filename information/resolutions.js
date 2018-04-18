@@ -129,8 +129,8 @@ const bc = {
 const bd = {
     player: 20,
     enemy: 0,
-    string: "You tried meditating and they hit you with their shield.  And effective if inele" +
-            "gant strategy"
+    string: "You tried meditating and they hit you with their shield.  An effective if ineleg" +
+            "ant strategy"
 };
 
 const be = {

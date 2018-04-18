@@ -8,9 +8,9 @@ export const baseChar = {
     sprites: "./assets/sprites/male.png",
 
     render: {
-        step: 192,
-        start: 70,
-        height: 1998,
+        step: 64,
+        start: 6,
+        height: 718,
         max: 1100
     }
 };

@@ -1,10 +1,11 @@
-import {goblin, darkElf, evilWizard, skeleton} from "./information/enemies";
+import * as characters from "./information/characters";
 import character from "./character";
+import getResolution from "./information/resolutions";
 
 class battle {
     constructor(character1, character2) {
         this.player = character1;
-        this.enemy = character2 || new character(skeleton);
+        this.enemy = character2 || new character(characters.skeleton, -128);
         this.addButtons(this.player);
         this
             .player
@@ -33,17 +34,27 @@ class battle {
             });
     }
 
-    handleMove(move, attacker, defender) {
-        console.log("move in handle", move);
+    handleMove(move) {
         let enemyMove = this
             .enemy
             .getMove();
-        this.handleHp();
-        console.log("enemyMove", enemyMove);
+        let resolution = getResolution(move.move, enemyMove.move);
+        this.handleHp(resolution);
+        let previous = document.getElementsByClassName('announce')[0];
+        if (previous) {
+            previous.remove();
+        }
+        let announce = document.createElement("DIV");
+        announce.innerText = resolution.string;
+        announce.setAttribute("class", "announce");
+        let sky = document.getElementsByClassName('sky')[0];
+        sky.appendChild(announce);
         console.log(this.player.hitPoints, this.enemy.hitPoints);
     }
 
-    handleHp() {
+    handleHp(resolution) {
+        this.player.hitPoints -= resolution.player;
+        this.enemy.hitPoints -= resolution.enemy;
         console.log("HP");
         let pHealth = document.getElementsByClassName(this.player.identifier)[0];
         pHealth.style.width = `${ (this.player.hitPoints * 100) / 50}%`;

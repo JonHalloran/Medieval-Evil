@@ -1,21 +1,23 @@
 class character {
-    constructor(initializaton) {
+    constructor(initializaton, enemyIncrement) {
         this.moves = initializaton.moves;
         this.hitPoints = 50;
         this.sprites = initializaton.sprites;
         this.rendStart = initializaton.render.start;
         this.rendStep = initializaton.render.step;
         this.rendHeight = initializaton.render.height;
+        console.log("this.rendHeight cons", this.rendHeight);
         this.rendMax = initializaton.render.max;
         this.death = initializaton.death;
+        this.enemyIncrement = enemyIncrement;
         this.identifier = Math
             .random()
             .toString();
     }
 
     getMove() {
-        let randomMove = this.moves[0];
-        this.renderMove(randomMove.render.start, randomMove);
+        let randomMove = this.moves[Math.floor(Math.random() * this.moves.length)];
+        this.renderMove(randomMove.render.start - 11, randomMove);
         return randomMove;
     }
 
@@ -57,7 +59,11 @@ class character {
         let context = canvas.getContext("2d");
 
         charImg.onload = function () {
-            context.drawImage(charImg, char.rendStart, char.rendHeight, 64, 64, 0, 0, 200, 200);
+            console.log("randHeight", char.rendHeight);
+            console.log("enemy inc", char.enemyIncrement);
+
+            console.log("char height", char.rendHeight + char.enemyIncrement);
+            context.drawImage(charImg, char.rendStart, char.rendHeight + char.enemyIncrement, 64, 64, 50, 0, 200, 200);
         };
     }
 
@@ -69,11 +75,16 @@ class character {
         context.clearRect(0, 0, canvas.width, canvas.height);
         let image = new Image();
         image.src = this.sprites;
-        if (start != move.render.max) {
-            context.drawImage(image, start, move.render.height, 64, 64, -0, 0, 200, 200);
+        let end = move.render.max;
+        if (this.enemyIncrement) {
+            end -= 11;
+        }
+        if (start !== end) {
+            context.drawImage(image, start, move.render.height + this.enemyIncrement, 64, 64, 50, 0, 200, 200);
+            console.log(this, move.render.height + this.enemyIncrement);
             setTimeout(() => this.renderMove((start + move.render.step), move), 100);
         } else {
-            context.drawImage(image, this.rendStart, this.rendHeight, 64, 64, 0, 0, 200, 200);
+            context.drawImage(image, this.rendStart, this.rendHeight + this.enemyIncrement, 64, 64, 50, 0, 200, 200);
         }
     }
 

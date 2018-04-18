@@ -8,10 +8,10 @@ export const basicAttack = {
     move: BASIC_ATTACK,
     image: "./assets/moves/pointy-sword.svg",
     render: {
-        step: 192,
-        start: 70,
-        height: 1998,
-        max: 1100
+        step: 64,
+        start: 6,
+        height: 974,
+        max: 390
     }
 };
 
@@ -22,7 +22,7 @@ export const meditate = {
         step: 64,
         start: 6,
         height: 206,
-        max: 400
+        max: 390
     }
 };
 
@@ -33,7 +33,7 @@ export const defend = {
         step: 64,
         start: 6,
         height: 462,
-        max: 400
+        max: 454
     }
 };
 
@@ -52,9 +52,9 @@ export const parry = {
     move: PARRY,
     image: "./assets/moves/crossed-swords.svg",
     render: {
-        step: 192,
-        start: 70,
-        height: 1998,
-        max: 1100
+        step: 64,
+        start: 6,
+        height: 974,
+        max: 390
     }
 };

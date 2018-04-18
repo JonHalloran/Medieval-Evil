@@ -73,12 +73,42 @@ export const evilWizard = {
 
     equipment: {},
 
-    sprites: "./assets/sprites/skeleton.png",
+    sprites: "./assets/sprites/evilWizard.png",
 
     render: {
         step: 64,
         start: -10,
         height: 850,
+        max: 320
+    },
+
+    death: {
+        step: 64,
+        start: -10,
+        height: 1298,
+        max: 320
+    }
+};
+
+export const skeleton = {
+    moves: [moves.basicAttack],
+
+    attributes: {
+        speed: 50,
+        strength: 50,
+        dexterity: 50,
+        constitution: 50,
+        intelligence: 50
+    },
+
+    equipment: {},
+
+    sprites: "./assets/sprites/skeleton.png",
+
+    render: {
+        step: 64,
+        start: 0,
+        height: 333,
         max: 320
     },
 

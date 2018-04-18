@@ -19,7 +19,7 @@ export const baseChar = {
 
     render: {
         step: 192,
-        start: 60,
+        start: 70,
         height: 1998,
         max: 1100
     }

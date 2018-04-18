@@ -96,7 +96,7 @@ const startGame = () => {
 class battle {
     constructor(character1, character2) {
         this.player = character1;
-        this.enemy = character2 || new __WEBPACK_IMPORTED_MODULE_1__character__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__information_enemies__["a" /* evilWizard */]);
+        this.enemy = character2 || new __WEBPACK_IMPORTED_MODULE_1__character__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__information_enemies__["a" /* skeleton */]);
         this.timeP1 = 0;
         this.timeP2 = 0;
         this.fight(this.player, this.enemy);
@@ -261,7 +261,7 @@ const evilWizard = {
 
     equipment: {},
 
-    sprites: "./assets/sprites/skeleton.png",
+    sprites: "./assets/sprites/evilWizard.png",
 
     render: {
         step: 64,
@@ -277,7 +277,39 @@ const evilWizard = {
         max: 320
     }
 };
-/* harmony export (immutable) */ __webpack_exports__["a"] = evilWizard;
+/* unused harmony export evilWizard */
+
+
+const skeleton = {
+    moves: [__WEBPACK_IMPORTED_MODULE_0__moves__["a" /* basicAttack */]],
+
+    attributes: {
+        speed: 50,
+        strength: 50,
+        dexterity: 50,
+        constitution: 50,
+        intelligence: 50
+    },
+
+    equipment: {},
+
+    sprites: "./assets/sprites/skeleton.png",
+
+    render: {
+        step: 64,
+        start: 0,
+        height: 333,
+        max: 320
+    },
+
+    death: {
+        step: 64,
+        start: -10,
+        height: 1298,
+        max: 320
+    }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = skeleton;
 
 
 /***/ }),
@@ -435,7 +467,7 @@ const baseChar = {
 
     render: {
         step: 192,
-        start: 60,
+        start: 70,
         height: 1998,
         max: 1100
     }

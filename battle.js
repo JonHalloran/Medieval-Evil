@@ -1,10 +1,10 @@
-import {goblin, darkElf, evilWizard} from "./information/enemies";
+import {goblin, darkElf, evilWizard, skeleton} from "./information/enemies";
 import character from "./character";
 
 class battle {
     constructor(character1, character2) {
         this.player = character1;
-        this.enemy = character2 || new character(evilWizard);
+        this.enemy = character2 || new character(skeleton);
         this.timeP1 = 0;
         this.timeP2 = 0;
         this.fight(this.player, this.enemy);

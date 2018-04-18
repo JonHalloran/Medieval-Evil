@@ -1,8 +1,7 @@
 class character {
     constructor(initializaton) {
-        this.attributes = initializaton.attributes;
         this.moves = initializaton.moves;
-        this.hitPoints = this.attributes.constitution;
+        this.hitPoints = 50;
         this.sprites = initializaton.sprites;
         this.rendStart = initializaton.render.start;
         this.rendStep = initializaton.render.step;
@@ -14,17 +13,10 @@ class character {
             .toString();
     }
 
-    getMove(defender) {
-        if (this.health <= 0) {
-            console.log("this death", this.death);
-            console.log("TESSSSSTTTTTTT");
-            this.renderDeath(this.death.start, this.death.step);
-        }
-        // let randomMove = this.moves[Math.floor(Math.random() * this.moves.length)];
+    getMove() {
         let randomMove = this.moves[0];
-        console.log("randomMove", randomMove);
-        this.renderAction(this.rendStart, this.rendStep);
-        return randomMove(this)(defender);
+        this.renderMove(randomMove.render.start, randomMove);
+        return randomMove;
     }
 
     getTime() {
@@ -69,17 +61,17 @@ class character {
         };
     }
 
-    renderAction(start, step) {
+    renderMove(start, move) {
+        console.log("start", start);
         // console.log('render action', this, start);
         let canvas = document.getElementById(this.identifier);
         let context = canvas.getContext("2d");
         context.clearRect(0, 0, canvas.width, canvas.height);
         let image = new Image();
         image.src = this.sprites;
-
-        if (start < this.rendMax) {
-            context.drawImage(image, start, this.rendHeight, 64, 64, -0, 0, 200, 200);
-            setTimeout(() => this.renderAction((start + step), step), 100);
+        if (start != move.render.max) {
+            context.drawImage(image, start, move.render.height, 64, 64, -0, 0, 200, 200);
+            setTimeout(() => this.renderMove((start + move.render.step), move), 100);
         } else {
             context.drawImage(image, this.rendStart, this.rendHeight, 64, 64, 0, 0, 200, 200);
         }

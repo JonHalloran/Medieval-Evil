@@ -97,9 +97,6 @@ class battle {
     constructor(character1, character2) {
         this.player = character1;
         this.enemy = character2 || new __WEBPACK_IMPORTED_MODULE_1__character__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__information_enemies__["a" /* skeleton */]);
-        this.timeP1 = 0;
-        this.timeP2 = 0;
-        this.fight(this.player, this.enemy);
         this.addButtons(this.player);
         this
             .player
@@ -115,63 +112,35 @@ class battle {
             .moves
             .forEach(move => {
                 let moveLi = document.createElement('IMG');
-                moveLi.setAttribute('src', "./assets/actions/pointy-sword.svg");
+                moveLi.setAttribute('src', move.image);
                 moveLi.setAttribute("class", "move");
                 moveLi.addEventListener("click", () => {
-                    this.handleMove(move(this.player)(this.enemy), this.player, this.enemy);
-                    this.timeP1 -= 1;
-                    this.fight();
+                    console.log("calcMove", move);
+                    this.handleMove(move);
                     this
                         .player
-                        .getMove();
+                        .renderMove(move.render.start, move);
                 });
                 moves.appendChild(moveLi);
             });
     }
 
-    fight() {
-        while ((this.player.alive() && this.enemy.alive() && this.timeP1 < 1)) {
-            this.playNextTurn();
-        }
-    }
-
-    playNextTurn() {
-        console.log("pnt");
-        while (this.timeP1 < 1) {
-            if (this.timeP2 > 1) {
-                let moveEn = this
-                    .enemy
-                    .getMove(this.player);
-                this.handleMove(this.enemy, this.player);
-                console.log(moveEn);
-                this.handleMove(moveEn, this.enemy, this.player);
-                this.timeP2 -= 1;
-            } else {
-                this.timeP1 += this
-                    .player
-                    .getTime();
-                this.timeP2 += this
-                    .enemy
-                    .getTime();
-            }
-        }
-    }
-
     handleMove(move, attacker, defender) {
         console.log("move in handle", move);
-        if (move.damage) {
-            defender.hitPoints -= move.damage;
-        }
+        let enemyMove = this
+            .enemy
+            .getMove();
         this.handleHp();
+        console.log("enemyMove", enemyMove);
         console.log(this.player.hitPoints, this.enemy.hitPoints);
     }
 
     handleHp() {
         console.log("HP");
         let pHealth = document.getElementsByClassName(this.player.identifier)[0];
-        pHealth.style.width = `${ (this.player.hitPoints * 100) / this.player.attributes.constitution}%`;
+        pHealth.style.width = `${ (this.player.hitPoints * 100) / 50}%`;
         let eHealth = document.getElementsByClassName(this.enemy.identifier)[0];
-        eHealth.style.width = `${ (this.enemy.hitPoints * 100) / this.enemy.attributes.constitution}%`;
+        eHealth.style.width = `${ (this.enemy.hitPoints * 100) / 50}%`;
     }
 }
 /* harmony default export */ __webpack_exports__["a"] = (battle);
@@ -317,17 +286,85 @@ const skeleton = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-const basicAttack = (attacker) => (defender) => {
-    if (Math.random() < (attacker.attributes.dexterity / defender.attributes.dexterity)) {
-        console.log("basic");
-        return {
-            damage: (attacker.attributes.strength / 10),
-            damageType: "physical"
-        };
+const BASIC_ATTACK = "BASIC_ATTACK";
+/* unused harmony export BASIC_ATTACK */
+
+const MEDITATE = "MEDITATE";
+/* unused harmony export MEDITATE */
+
+const DEFEND = "DEFEND";
+/* unused harmony export DEFEND */
+
+const SHIELD_ATTACK = "SHIELD_ATTACK";
+/* unused harmony export SHIELD_ATTACK */
+
+const PARRY = "PARRY";
+/* unused harmony export PARRY */
+
+
+const basicAttack = {
+    move: BASIC_ATTACK,
+    image: "./assets/moves/pointy-sword.svg",
+    render: {
+        step: 192,
+        start: 70,
+        height: 1998,
+        max: 1100
     }
-    console.log("basic");
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = basicAttack;
+
+
+const meditate = {
+    move: MEDITATE,
+    image: "./assets/moves/meditation.svg",
+    render: {
+        step: 64,
+        start: 6,
+        height: 206,
+        max: 400
+    }
+};
+/* harmony export (immutable) */ __webpack_exports__["c"] = meditate;
+
+
+const defend = {
+    move: DEFEND,
+    image: "./assets/moves/shield.svg",
+    render: {
+        step: 64,
+        start: 6,
+        height: 462,
+        max: 400
+    }
+};
+/* harmony export (immutable) */ __webpack_exports__["b"] = defend;
+
+
+const shieldAttack = {
+    move: SHIELD_ATTACK,
+    image: "./assets/moves/shield-bounces.svg",
+    render: {
+        step: -1,
+        start: 326,
+        height: 462,
+        max: 316
+    }
+};
+/* harmony export (immutable) */ __webpack_exports__["e"] = shieldAttack;
+
+
+const parry = {
+    move: PARRY,
+    image: "./assets/moves/crossed-swords.svg",
+    render: {
+        step: 192,
+        start: 70,
+        height: 1998,
+        max: 1100
+    }
+};
+/* harmony export (immutable) */ __webpack_exports__["d"] = parry;
 
 
 /***/ }),
@@ -337,9 +374,8 @@ const basicAttack = (attacker) => (defender) => {
 "use strict";
 class character {
     constructor(initializaton) {
-        this.attributes = initializaton.attributes;
         this.moves = initializaton.moves;
-        this.hitPoints = this.attributes.constitution;
+        this.hitPoints = 50;
         this.sprites = initializaton.sprites;
         this.rendStart = initializaton.render.start;
         this.rendStep = initializaton.render.step;
@@ -351,17 +387,10 @@ class character {
             .toString();
     }
 
-    getMove(defender) {
-        if (this.health <= 0) {
-            console.log("this death", this.death);
-            console.log("TESSSSSTTTTTTT");
-            this.renderDeath(this.death.start, this.death.step);
-        }
-        // let randomMove = this.moves[Math.floor(Math.random() * this.moves.length)];
+    getMove() {
         let randomMove = this.moves[0];
-        console.log("randomMove", randomMove);
-        this.renderAction(this.rendStart, this.rendStep);
-        return randomMove(this)(defender);
+        this.renderMove(randomMove.render.start, randomMove);
+        return randomMove;
     }
 
     getTime() {
@@ -406,17 +435,17 @@ class character {
         };
     }
 
-    renderAction(start, step) {
+    renderMove(start, move) {
+        console.log("start", start);
         // console.log('render action', this, start);
         let canvas = document.getElementById(this.identifier);
         let context = canvas.getContext("2d");
         context.clearRect(0, 0, canvas.width, canvas.height);
         let image = new Image();
         image.src = this.sprites;
-
-        if (start < this.rendMax) {
-            context.drawImage(image, start, this.rendHeight, 64, 64, -0, 0, 200, 200);
-            setTimeout(() => this.renderAction((start + step), step), 100);
+        if (start != move.render.max) {
+            context.drawImage(image, start, move.render.height, 64, 64, -0, 0, 200, 200);
+            setTimeout(() => this.renderMove((start + move.render.step), move), 100);
         } else {
             context.drawImage(image, this.rendStart, this.rendHeight, 64, 64, 0, 0, 200, 200);
         }
@@ -450,18 +479,8 @@ class character {
 
 const baseChar = {
     moves: [
-        __WEBPACK_IMPORTED_MODULE_0__moves__["a" /* basicAttack */], __WEBPACK_IMPORTED_MODULE_0__moves__["a" /* basicAttack */], __WEBPACK_IMPORTED_MODULE_0__moves__["a" /* basicAttack */], __WEBPACK_IMPORTED_MODULE_0__moves__["a" /* basicAttack */]
+        __WEBPACK_IMPORTED_MODULE_0__moves__["a" /* basicAttack */], __WEBPACK_IMPORTED_MODULE_0__moves__["c" /* meditate */], __WEBPACK_IMPORTED_MODULE_0__moves__["b" /* defend */], __WEBPACK_IMPORTED_MODULE_0__moves__["e" /* shieldAttack */], __WEBPACK_IMPORTED_MODULE_0__moves__["d" /* parry */]
     ],
-
-    attributes: {
-        speed: 50,
-        strength: 50,
-        dexterity: 50,
-        constitution: 50,
-        intelligence: 50
-    },
-
-    equipment: {},
 
     sprites: "./assets/sprites/male.png",
 
@@ -487,10 +506,6 @@ class playerCharacter extends __WEBPACK_IMPORTED_MODULE_0__character__["a" /* de
     constructor(initialization) {
         super(initialization);
         this.equipement = initialization.equipment;
-    }
-
-    getMove() {
-        this.renderAction(this.rendStart, this.rendStep);
     }
 }
 

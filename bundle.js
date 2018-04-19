@@ -148,6 +148,10 @@ class battle {
     handleHp(resolution) {
         this.player.hitPoints -= resolution.player;
         this.enemy.hitPoints -= resolution.enemy;
+        if (this.enemy.hitPoints > 50) 
+            this.enemy.hitPoints = 50;
+        if (this.player.hitPoints > 50) 
+            this.player.hitPoints = 50;
         console.log("HP");
         let pHealth = document.getElementsByClassName(this.player.identifier)[0];
         pHealth.style.width = `${ (this.player.hitPoints * 100) / 50}%`;

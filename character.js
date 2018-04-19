@@ -1,12 +1,11 @@
 class character {
     constructor(initializaton, enemyIncrement) {
         this.moves = initializaton.moves;
-        this.hitPoints = 50;
+        this.hitPoints = 10;
         this.sprites = initializaton.sprites;
         this.rendStart = initializaton.render.start;
         this.rendStep = initializaton.render.step;
         this.rendHeight = initializaton.render.height;
-        console.log("this.rendHeight cons", this.rendHeight);
         this.rendMax = initializaton.render.max;
         this.death = initializaton.death;
         this.enemyIncrement = enemyIncrement;
@@ -26,12 +25,7 @@ class character {
     }
 
     alive() {
-        if (this.hitPoints > 0) {
-            return true;
-        } else {
-            this.renderDeath(this.death.start, this.death.step);
-            return false;
-        }
+        return this.hitPoints > 0;
     }
 
     renderChar(side) {
@@ -54,22 +48,14 @@ class character {
         let charImg = new Image();
         let canvas = document.getElementById(char.identifier);
         charImg.src = char.sprites;
-        console.log(canvas);
-        console.log(charImg);
         let context = canvas.getContext("2d");
 
         charImg.onload = function () {
-            console.log("randHeight", char.rendHeight);
-            console.log("enemy inc", char.enemyIncrement);
-
-            console.log("char height", char.rendHeight + char.enemyIncrement);
             context.drawImage(charImg, char.rendStart, char.rendHeight + char.enemyIncrement, 64, 64, 50, 0, 200, 200);
         };
     }
 
     renderMove(start, move) {
-        console.log("start", start);
-        // console.log('render action', this, start);
         let canvas = document.getElementById(this.identifier);
         let context = canvas.getContext("2d");
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -81,25 +67,24 @@ class character {
         }
         if (start !== end) {
             context.drawImage(image, start, move.render.height + this.enemyIncrement, 64, 64, 50, 0, 200, 200);
-            console.log(this, move.render.height + this.enemyIncrement);
             setTimeout(() => this.renderMove((start + move.render.step), move), 100);
         } else {
             context.drawImage(image, this.rendStart, this.rendHeight + this.enemyIncrement, 64, 64, 50, 0, 200, 200);
         }
     }
 
-    renderDeath(start, step) {
-        console.log(this.death);
-        console.log('render death', this, start);
+    renderDeath(start) {
+        console.log("death", start);
         let canvas = document.getElementById(this.identifier);
         let context = canvas.getContext("2d");
-        // context.clearRect(0, 0, canvas.width, canvas.height);
         let image = new Image();
+        console.log(canvas, context, image);
         image.src = this.sprites;
-        if (start < this.death.max) {
+
+        if (start <= 390) {
             context.clearRect(0, 0, canvas.width, canvas.height);
-            context.drawImage(image, start, this.death.height, 64, 64, -0, 0, 200, 200);
-            setTimeout(() => this.renderDeath((start + step), step), 100);
+            context.drawImage(image, start, 1294, 64, 64, 0, 0, 200, 200);
+            setTimeout(() => this.renderDeath(start + 64), 100);
         }
     }
 }

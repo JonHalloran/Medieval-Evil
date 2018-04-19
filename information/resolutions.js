@@ -117,7 +117,7 @@ const ba = {
 const bb = {
     player: -20,
     enemy: -20,
-    string: "You and the enemy both meditated.  You don know this is a fighting game, right?"
+    string: "You and the enemy both meditated.  You do know this is a fighting game, right?"
 };
 
 const bc = {

@@ -13,6 +13,9 @@ class battle {
         this
             .enemy
             .renderChar("enemy");
+        this.checkWinner = this
+            .checkWinner
+            .bind(this);
     }
 
     addButtons(player) {
@@ -24,17 +27,18 @@ class battle {
                 moveLi.setAttribute('src', move.image);
                 moveLi.setAttribute("class", "move");
                 moveLi.addEventListener("click", () => {
-                    console.log("calcMove", move);
                     this.handleMove(move);
-                    this
-                        .player
-                        .renderMove(move.render.start, move);
                 });
                 moves.appendChild(moveLi);
             });
     }
 
     handleMove(move) {
+        if (!(this.player.alive() && this.enemy.alive())) 
+            return null;
+        this
+            .player
+            .renderMove(move.render.start, move);
         let enemyMove = this
             .enemy
             .getMove();
@@ -49,7 +53,6 @@ class battle {
         announce.setAttribute("class", "announce");
         let sky = document.getElementsByClassName('sky')[0];
         sky.appendChild(announce);
-        console.log(this.player.hitPoints, this.enemy.hitPoints);
     }
 
     handleHp(resolution) {
@@ -59,11 +62,38 @@ class battle {
             this.enemy.hitPoints = 50;
         if (this.player.hitPoints > 50) 
             this.player.hitPoints = 50;
-        console.log("HP");
         let pHealth = document.getElementsByClassName(this.player.identifier)[0];
         pHealth.style.width = `${ (this.player.hitPoints * 100) / 50}%`;
         let eHealth = document.getElementsByClassName(this.enemy.identifier)[0];
         eHealth.style.width = `${ (this.enemy.hitPoints * 100) / 50}%`;
+        setTimeout(this.checkWinner, 1000);
+    }
+
+    checkWinner() {
+        if (!this.enemy.alive()) {
+            this
+                .enemy
+                .renderDeath(10);
+
+            this.gameOver();
+        } else if (!this.player.alive()) {
+            this
+                .player
+                .renderDeath(10);
+            this.gameOver();
+        }
+    }
+
+    gameOver() {
+        console.log("gameOver");
+        let game = document.getElementsByClassName("game")[0];
+        let modalBackground = document.createElement("DIV");
+        modalBackground.setAttribute("class", "modal-background");
+        game.appendChild(modalBackground);
+
+        let modal = document.createElement("div");
+        modal.setAttribute("class", "announce modal");
+        modalBackground.appendChild(modal);
     }
 }
 export default battle;

@@ -106,6 +106,9 @@ class battle {
         this
             .enemy
             .renderChar("enemy");
+        this.checkWinner = this
+            .checkWinner
+            .bind(this);
     }
 
     addButtons(player) {
@@ -117,17 +120,18 @@ class battle {
                 moveLi.setAttribute('src', move.image);
                 moveLi.setAttribute("class", "move");
                 moveLi.addEventListener("click", () => {
-                    console.log("calcMove", move);
                     this.handleMove(move);
-                    this
-                        .player
-                        .renderMove(move.render.start, move);
                 });
                 moves.appendChild(moveLi);
             });
     }
 
     handleMove(move) {
+        if (!(this.player.alive() && this.enemy.alive())) 
+            return null;
+        this
+            .player
+            .renderMove(move.render.start, move);
         let enemyMove = this
             .enemy
             .getMove();
@@ -142,7 +146,6 @@ class battle {
         announce.setAttribute("class", "announce");
         let sky = document.getElementsByClassName('sky')[0];
         sky.appendChild(announce);
-        console.log(this.player.hitPoints, this.enemy.hitPoints);
     }
 
     handleHp(resolution) {
@@ -152,11 +155,38 @@ class battle {
             this.enemy.hitPoints = 50;
         if (this.player.hitPoints > 50) 
             this.player.hitPoints = 50;
-        console.log("HP");
         let pHealth = document.getElementsByClassName(this.player.identifier)[0];
         pHealth.style.width = `${ (this.player.hitPoints * 100) / 50}%`;
         let eHealth = document.getElementsByClassName(this.enemy.identifier)[0];
         eHealth.style.width = `${ (this.enemy.hitPoints * 100) / 50}%`;
+        setTimeout(this.checkWinner, 1000);
+    }
+
+    checkWinner() {
+        if (!this.enemy.alive()) {
+            this
+                .enemy
+                .renderDeath(10);
+
+            this.gameOver();
+        } else if (!this.player.alive()) {
+            this
+                .player
+                .renderDeath(10);
+            this.gameOver();
+        }
+    }
+
+    gameOver() {
+        console.log("gameOver");
+        let game = document.getElementsByClassName("game")[0];
+        let modalBackground = document.createElement("DIV");
+        modalBackground.setAttribute("class", "modal-background");
+        game.appendChild(modalBackground);
+
+        let modal = document.createElement("div");
+        modal.setAttribute("class", "announce modal");
+        modalBackground.appendChild(modal);
     }
 }
 /* harmony default export */ __webpack_exports__["a"] = (battle);
@@ -256,12 +286,11 @@ const parry = {
 class character {
     constructor(initializaton, enemyIncrement) {
         this.moves = initializaton.moves;
-        this.hitPoints = 50;
+        this.hitPoints = 10;
         this.sprites = initializaton.sprites;
         this.rendStart = initializaton.render.start;
         this.rendStep = initializaton.render.step;
         this.rendHeight = initializaton.render.height;
-        console.log("this.rendHeight cons", this.rendHeight);
         this.rendMax = initializaton.render.max;
         this.death = initializaton.death;
         this.enemyIncrement = enemyIncrement;
@@ -281,12 +310,7 @@ class character {
     }
 
     alive() {
-        if (this.hitPoints > 0) {
-            return true;
-        } else {
-            this.renderDeath(this.death.start, this.death.step);
-            return false;
-        }
+        return this.hitPoints > 0;
     }
 
     renderChar(side) {
@@ -309,22 +333,14 @@ class character {
         let charImg = new Image();
         let canvas = document.getElementById(char.identifier);
         charImg.src = char.sprites;
-        console.log(canvas);
-        console.log(charImg);
         let context = canvas.getContext("2d");
 
         charImg.onload = function () {
-            console.log("randHeight", char.rendHeight);
-            console.log("enemy inc", char.enemyIncrement);
-
-            console.log("char height", char.rendHeight + char.enemyIncrement);
             context.drawImage(charImg, char.rendStart, char.rendHeight + char.enemyIncrement, 64, 64, 50, 0, 200, 200);
         };
     }
 
     renderMove(start, move) {
-        console.log("start", start);
-        // console.log('render action', this, start);
         let canvas = document.getElementById(this.identifier);
         let context = canvas.getContext("2d");
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -336,25 +352,24 @@ class character {
         }
         if (start !== end) {
             context.drawImage(image, start, move.render.height + this.enemyIncrement, 64, 64, 50, 0, 200, 200);
-            console.log(this, move.render.height + this.enemyIncrement);
             setTimeout(() => this.renderMove((start + move.render.step), move), 100);
         } else {
             context.drawImage(image, this.rendStart, this.rendHeight + this.enemyIncrement, 64, 64, 50, 0, 200, 200);
         }
     }
 
-    renderDeath(start, step) {
-        console.log(this.death);
-        console.log('render death', this, start);
+    renderDeath(start) {
+        console.log("death", start);
         let canvas = document.getElementById(this.identifier);
         let context = canvas.getContext("2d");
-        // context.clearRect(0, 0, canvas.width, canvas.height);
         let image = new Image();
+        console.log(canvas, context, image);
         image.src = this.sprites;
-        if (start < this.death.max) {
+
+        if (start <= 390) {
             context.clearRect(0, 0, canvas.width, canvas.height);
-            context.drawImage(image, start, this.death.height, 64, 64, -0, 0, 200, 200);
-            setTimeout(() => this.renderDeath((start + step), step), 100);
+            context.drawImage(image, start, 1294, 64, 64, 0, 0, 200, 200);
+            setTimeout(() => this.renderDeath(start + 64), 100);
         }
     }
 }
@@ -597,7 +612,7 @@ const ba = {
 const bb = {
     player: -20,
     enemy: -20,
-    string: "You and the enemy both meditated.  You don know this is a fighting game, right?"
+    string: "You and the enemy both meditated.  You do know this is a fighting game, right?"
 };
 
 const bc = {

@@ -162,3 +162,26 @@ span {
     padding-top: 2px;
     padding-left: 2px;
 }
+
+.start-background {
+    position: absolute;
+    background-color: black;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+h1 {
+    font-size: 30px;
+    color: white;
+    margin-bottom: 25vh;
+}
+
+.choose-char:hover {
+    border-radius: 10px;
+    border: 5px solid white;
+}

@@ -61,13 +61,38 @@ export const informationModal = () => {
 export const startGameModal = () => {
     let game = document.getElementsByClassName("game")[0];
     let modalBackground = document.createElement("DIV");
-    modalBackground.setAttribute("class", "modal-background");
+    modalBackground.setAttribute("class", "start-background");
     game.appendChild(modalBackground);
-    let modal = document.createElement("div");
-    modal.setAttribute("class", "announce modal");
-    modalBackground.appendChild(modal);
-    let startButton = document.createElement("DIV");
-    startButton.innerHTML = "Start Game";
-    startButton.setAttribute("class", "start-button button");
-    modal.appendChild(startButton);
+    let startHeader = document.createElement("H1");
+    startHeader.innerHTML = "CHOOSE A CHARACTER";
+    modalBackground.appendChild(startHeader);
+    let characterUL = document.createElement("UL");
+    modalBackground.appendChild(characterUL);
+    Object
+        .values(characters)
+        .forEach((char, ind) => {
+            let canvas = document.createElement("CANVAS");
+            canvas.setAttribute("class", `canvas-${ind} choose-char`);
+            characterUL.appendChild(canvas);
+            console.log(char);
+            renderWalking(ind, 0, char.sprites);
+            canvas.addEventListener("click", () => {
+                startGame(char);
+                modalBackground.remove();
+            });
+        });
+};
+
+const renderWalking = (index, start, spriteSrc) => {
+    let canvas = document.getElementsByClassName(`canvas-${index}`)[0];
+    if (!canvas) 
+        return null;
+    let context = canvas.getContext("2d");
+    canvas.style.width = "150px";
+    canvas.style.height = "150px";
+    let image = new Image();
+    image.src = spriteSrc;
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(image, start, 649, 64, 64, 75, 0, 150, 150);
+    setTimeout(() => renderWalking(index, (start + 64) % 384, spriteSrc), 100);
 };

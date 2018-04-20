@@ -10,14 +10,12 @@ document.addEventListener("DOMContentLoaded", () => {
     questionButton.addEventListener('click', () => informationModal());
     startGameModal();
     let newGame = document.getElementsByClassName("start-button")[0];
-    newGame.addEventListener("click", () => {
-        startGame();
-        let modalBackground = document.getElementsByClassName("modal-background")[0];
-        modalBackground.remove();
-    });
+    // newGame.addEventListener("click", () => {     startGame();     let
+    // modalBackground = document.getElementsByClassName("modal-background")[0];
+    // modalBackground.remove(); });
 });
 
-export const startGame = () => {
-    let player = new character(characters.golden, 0);
+export const startGame = (char) => {
+    let player = new character(char, 0);
     new battle(player);
 };

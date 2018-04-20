@@ -47,7 +47,7 @@ export const informationModal = () => {
     modal.setAttribute("class", "announce modal");
     modalBackground.appendChild(modal);
     let image = document.createElement("img");
-    image.src = "/Users/jonathanhalloran/Desktop/Browser-RPG/assets/moves/moveChart.png";
+    image.src = "./assets/moves/moveChart.png";
     modal.appendChild(image);
     let gotItButton = document.createElement('div');
     gotItButton.innerHTML = "Got it";

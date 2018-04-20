@@ -35,6 +35,8 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    max-width: 80%;
+    margin-top: 10px;
 }
 
 .battlefield {
@@ -126,9 +128,32 @@ canvas {
     width: 40%;
 }
 
-.play-again-button {
+.button {
     cursor: pointer;
     border-radius: 10px;
     border: 5px solid white;
     padding: 5px;
+    margin-top: 10px;
+}
+
+.question-button {
+    background-color: rgb(18, 43, 179, 1);
+    border-radius: 10px;
+    border: 5px solid white;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    margin: 10px;
+    text-align: center;
+    font-size: 38px;
+    padding: 1px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+span {
+    padding-top: 2px;
+    padding-left: 2px;
 }

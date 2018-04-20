@@ -1,12 +1,17 @@
 import * as characters from "./information/characters";
 import character from "./character";
 import getResolution from "./information/resolutions";
-import {gameOverModal} from "./modals";
+import {gameOverModal, informationModal} from "./modals";
 
 class battle {
     constructor(character1, character2) {
         this.player = character1;
-        this.enemy = character2 || new character(characters.skeleton, -128);
+        let enemies = Object.values(characters);
+        let enemy = enemies[Math.floor(Math.random() * enemies.length)];
+        // let enemy = enemies[3];
+        console.log(enemies);
+        this.enemy = new character(enemy, -128);
+        console.log(enemy);
         this.addButtons(this.player);
         this
             .player
@@ -86,18 +91,12 @@ class battle {
         }
     }
 
-    gameOver(gOMsg) {
-        console.log("gameOver");
-        let game = document.getElementsByClassName("game")[0];
-        let modalBackground = document.createElement("DIV");
-        modalBackground.setAttribute("class", "modal-background");
-        game.appendChild(modalBackground);
-
-        let modal = document.createElement("div");
-        modal.setAttribute("class", "announce modal");
-        console.log(modal);
-        modal.innerHTML += gOMsg;
-        modalBackground.appendChild(modal);
-    }
+    // gameOver(gOMsg) {     console.log("gameOver");     let game =
+    // document.getElementsByClassName("game")[0];     let modalBackground =
+    // document.createElement("DIV");     modalBackground.setAttribute("class",
+    // "modal-background");     game.appendChild(modalBackground);     let modal =
+    // document.createElement("div");     modal.setAttribute("class", "announce
+    // modal");     console.log(modal);     modal.innerHTML += gOMsg;
+    // modalBackground.appendChild(modal); }
 }
 export default battle;

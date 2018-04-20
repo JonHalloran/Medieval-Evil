@@ -60,235 +60,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__battle__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__playerCharacter__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__character__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__information_characters__ = __webpack_require__(7);
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", () => startGame());
-
-const startGame = () => {
-    let player = new __WEBPACK_IMPORTED_MODULE_2__character__["a" /* default */](__WEBPACK_IMPORTED_MODULE_3__information_characters__["a" /* golden */], 0);
-    new __WEBPACK_IMPORTED_MODULE_0__battle__["a" /* default */](player);
-};
-/* harmony export (immutable) */ __webpack_exports__["startGame"] = startGame;
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__information_characters__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__character__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__information_resolutions__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals__ = __webpack_require__(9);
-
-
-
-
-
-class battle {
-    constructor(character1, character2) {
-        this.player = character1;
-        this.enemy = character2 || new __WEBPACK_IMPORTED_MODULE_1__character__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0__information_characters__["b" /* skeleton */], -128);
-        this.addButtons(this.player);
-        this
-            .player
-            .renderChar("player");
-        this
-            .enemy
-            .renderChar("enemy");
-        this.checkWinner = this
-            .checkWinner
-            .bind(this);
-    }
-
-    addButtons(player) {
-        let moves = document.querySelector(".moves-list");
-        player
-            .moves
-            .forEach(move => {
-                let moveLi = document.createElement('IMG');
-                moveLi.setAttribute('src', move.image);
-                moveLi.setAttribute("class", "move");
-                moveLi.addEventListener("click", () => {
-                    this.handleMove(move);
-                });
-                moves.appendChild(moveLi);
-            });
-    }
-
-    handleMove(move) {
-        if (!(this.player.alive() && this.enemy.alive())) 
-            return null;
-        this
-            .player
-            .renderMove(move.render.start, move);
-        let enemyMove = this
-            .enemy
-            .getMove();
-        let resolution = Object(__WEBPACK_IMPORTED_MODULE_2__information_resolutions__["a" /* default */])(move.move, enemyMove.move);
-        this.handleHp(resolution);
-        let previous = document.getElementsByClassName('announce')[0];
-        if (previous) {
-            previous.remove();
-        }
-        let announce = document.createElement("DIV");
-        announce.innerText = resolution.string;
-        announce.setAttribute("class", "announce");
-        let sky = document.getElementsByClassName('sky')[0];
-        sky.appendChild(announce);
-    }
-
-    handleHp(resolution) {
-        this.player.hitPoints -= resolution.player;
-        this.enemy.hitPoints -= resolution.enemy;
-        if (this.enemy.hitPoints > 50) 
-            this.enemy.hitPoints = 50;
-        if (this.player.hitPoints > 50) 
-            this.player.hitPoints = 50;
-        let pHealth = document.getElementsByClassName(this.player.identifier)[0];
-        pHealth.style.width = `${ (this.player.hitPoints * 100) / 50}%`;
-        let eHealth = document.getElementsByClassName(this.enemy.identifier)[0];
-        eHealth.style.width = `${ (this.enemy.hitPoints * 100) / 50}%`;
-        setTimeout(this.checkWinner, 1000);
-    }
-
-    checkWinner() {
-        console.log(__WEBPACK_IMPORTED_MODULE_3__modals__["a" /* gameOverModal */]);
-        if (!this.enemy.alive()) {
-            this
-                .enemy
-                .renderDeath(10);
-
-            Object(__WEBPACK_IMPORTED_MODULE_3__modals__["a" /* gameOverModal */])("Congratulats, you won!!!", this);
-        } else if (!this.player.alive()) {
-            this
-                .player
-                .renderDeath(10);
-            Object(__WEBPACK_IMPORTED_MODULE_3__modals__["a" /* gameOverModal */])("I'm Sorry, you died", this);
-        }
-    }
-
-    gameOver(gOMsg) {
-        console.log("gameOver");
-        let game = document.getElementsByClassName("game")[0];
-        let modalBackground = document.createElement("DIV");
-        modalBackground.setAttribute("class", "modal-background");
-        game.appendChild(modalBackground);
-
-        let modal = document.createElement("div");
-        modal.setAttribute("class", "announce modal");
-        console.log(modal);
-        modal.innerHTML += gOMsg;
-        modalBackground.appendChild(modal);
-    }
-}
-/* harmony default export */ __webpack_exports__["a"] = (battle);
-
-/***/ }),
-/* 2 */,
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-const BASIC_ATTACK = "BASIC_ATTACK";
-/* harmony export (immutable) */ __webpack_exports__["a"] = BASIC_ATTACK;
-
-const MEDITATE = "MEDITATE";
-/* harmony export (immutable) */ __webpack_exports__["c"] = MEDITATE;
-
-const DEFEND = "DEFEND";
-/* harmony export (immutable) */ __webpack_exports__["b"] = DEFEND;
-
-const SHIELD_ATTACK = "SHIELD_ATTACK";
-/* harmony export (immutable) */ __webpack_exports__["e"] = SHIELD_ATTACK;
-
-const PARRY = "PARRY";
-/* harmony export (immutable) */ __webpack_exports__["d"] = PARRY;
-
-
-const basicAttack = {
-    move: BASIC_ATTACK,
-    image: "./assets/moves/pointy-sword.svg",
-    render: {
-        step: 64,
-        start: 6,
-        height: 974,
-        max: 390
-    }
-};
-/* harmony export (immutable) */ __webpack_exports__["f"] = basicAttack;
-
-
-const meditate = {
-    move: MEDITATE,
-    image: "./assets/moves/meditation.svg",
-    render: {
-        step: 64,
-        start: 6,
-        height: 206,
-        max: 390
-    }
-};
-/* harmony export (immutable) */ __webpack_exports__["h"] = meditate;
-
-
-const defend = {
-    move: DEFEND,
-    image: "./assets/moves/shield.svg",
-    render: {
-        step: 64,
-        start: 6,
-        height: 462,
-        max: 454
-    }
-};
-/* harmony export (immutable) */ __webpack_exports__["g"] = defend;
-
-
-const shieldAttack = {
-    move: SHIELD_ATTACK,
-    image: "./assets/moves/shield-bounces.svg",
-    render: {
-        step: -1,
-        start: 326,
-        height: 462,
-        max: 316
-    }
-};
-/* harmony export (immutable) */ __webpack_exports__["j"] = shieldAttack;
-
-
-const parry = {
-    move: PARRY,
-    image: "./assets/moves/crossed-swords.svg",
-    render: {
-        step: 64,
-        start: 6,
-        height: 974,
-        max: 390
-    }
-};
-/* harmony export (immutable) */ __webpack_exports__["i"] = parry;
-
-
-/***/ }),
-/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -386,28 +162,11 @@ class character {
 /* harmony default export */ __webpack_exports__["a"] = (character);
 
 /***/ }),
-/* 5 */,
-/* 6 */
+/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__character__ = __webpack_require__(4);
-
-
-class playerCharacter extends __WEBPACK_IMPORTED_MODULE_0__character__["a" /* default */] {
-    constructor(initialization, enemyIncrement) {
-        super(initialization, enemyIncrement);
-        this.equipement = initialization.equipment;
-    }
-}
-
-/* unused harmony default export */ var _unused_webpack_default_export = (playerCharacter);
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__moves__ = __webpack_require__(3);
 
 
@@ -425,7 +184,7 @@ const golden = {
         max: 1100
     }
 };
-/* harmony export (immutable) */ __webpack_exports__["a"] = golden;
+/* harmony export (immutable) */ __webpack_exports__["golden"] = golden;
 
 
 const male = {
@@ -442,7 +201,7 @@ const male = {
         max: 1100
     }
 };
-/* unused harmony export male */
+/* harmony export (immutable) */ __webpack_exports__["male"] = male;
 
 
 const orc = {
@@ -459,7 +218,7 @@ const orc = {
         max: 1100
     }
 };
-/* unused harmony export orc */
+/* harmony export (immutable) */ __webpack_exports__["orc"] = orc;
 
 
 const skeleton = {
@@ -476,7 +235,7 @@ const skeleton = {
         max: 1100
     }
 };
-/* harmony export (immutable) */ __webpack_exports__["b"] = skeleton;
+/* harmony export (immutable) */ __webpack_exports__["skeleton"] = skeleton;
 
 
 const steel = {
@@ -493,11 +252,237 @@ const steel = {
         max: 1100
     }
 };
-/* unused harmony export steel */
+/* harmony export (immutable) */ __webpack_exports__["steel"] = steel;
 
 
 /***/ }),
-/* 8 */
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__battle__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__playerCharacter__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__character__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__information_characters__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modals__ = __webpack_require__(6);
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => startGame());
+
+const startGame = () => {
+    let player = new __WEBPACK_IMPORTED_MODULE_2__character__["a" /* default */](__WEBPACK_IMPORTED_MODULE_3__information_characters__["golden"], 0);
+    new __WEBPACK_IMPORTED_MODULE_0__battle__["a" /* default */](player);
+    let questionButton = document.getElementsByClassName("question-button")[0];
+    questionButton.addEventListener('click', () => Object(__WEBPACK_IMPORTED_MODULE_4__modals__["b" /* informationModal */])());
+};
+/* harmony export (immutable) */ __webpack_exports__["startGame"] = startGame;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const BASIC_ATTACK = "BASIC_ATTACK";
+/* harmony export (immutable) */ __webpack_exports__["a"] = BASIC_ATTACK;
+
+const MEDITATE = "MEDITATE";
+/* harmony export (immutable) */ __webpack_exports__["c"] = MEDITATE;
+
+const DEFEND = "DEFEND";
+/* harmony export (immutable) */ __webpack_exports__["b"] = DEFEND;
+
+const SHIELD_ATTACK = "SHIELD_ATTACK";
+/* harmony export (immutable) */ __webpack_exports__["e"] = SHIELD_ATTACK;
+
+const PARRY = "PARRY";
+/* harmony export (immutable) */ __webpack_exports__["d"] = PARRY;
+
+
+const basicAttack = {
+    move: BASIC_ATTACK,
+    image: "./assets/moves/pointy-sword.svg",
+    render: {
+        step: 64,
+        start: 6,
+        height: 974,
+        max: 390
+    }
+};
+/* harmony export (immutable) */ __webpack_exports__["f"] = basicAttack;
+
+
+const meditate = {
+    move: MEDITATE,
+    image: "./assets/moves/meditation.svg",
+    render: {
+        step: 64,
+        start: 6,
+        height: 206,
+        max: 390
+    }
+};
+/* harmony export (immutable) */ __webpack_exports__["h"] = meditate;
+
+
+const defend = {
+    move: DEFEND,
+    image: "./assets/moves/shield.svg",
+    render: {
+        step: 64,
+        start: 6,
+        height: 462,
+        max: 454
+    }
+};
+/* harmony export (immutable) */ __webpack_exports__["g"] = defend;
+
+
+const shieldAttack = {
+    move: SHIELD_ATTACK,
+    image: "./assets/moves/shield-bounces.svg",
+    render: {
+        step: -1,
+        start: 326,
+        height: 462,
+        max: 316
+    }
+};
+/* harmony export (immutable) */ __webpack_exports__["j"] = shieldAttack;
+
+
+const parry = {
+    move: PARRY,
+    image: "./assets/moves/crossed-swords.svg",
+    render: {
+        step: 64,
+        start: 6,
+        height: 974,
+        max: 390
+    }
+};
+/* harmony export (immutable) */ __webpack_exports__["i"] = parry;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__information_characters__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__character__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__information_resolutions__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals__ = __webpack_require__(6);
+
+
+
+
+
+class battle {
+    constructor(character1, character2) {
+        this.player = character1;
+        let enemies = Object.values(__WEBPACK_IMPORTED_MODULE_0__information_characters__);
+        let enemy = enemies[Math.floor(Math.random() * enemies.length)];
+        // let enemy = enemies[3];
+        console.log(enemies);
+        this.enemy = new __WEBPACK_IMPORTED_MODULE_1__character__["a" /* default */](enemy, -128);
+        console.log(enemy);
+        this.addButtons(this.player);
+        this
+            .player
+            .renderChar("player");
+        this
+            .enemy
+            .renderChar("enemy");
+        this.checkWinner = this
+            .checkWinner
+            .bind(this);
+    }
+
+    addButtons(player) {
+        let moves = document.querySelector(".moves-list");
+        player
+            .moves
+            .forEach(move => {
+                let moveLi = document.createElement('IMG');
+                moveLi.setAttribute('src', move.image);
+                moveLi.setAttribute("class", "move");
+                moveLi.addEventListener("click", () => {
+                    this.handleMove(move);
+                });
+                moves.appendChild(moveLi);
+            });
+    }
+
+    handleMove(move) {
+        if (!(this.player.alive() && this.enemy.alive())) 
+            return null;
+        this
+            .player
+            .renderMove(move.render.start, move);
+        let enemyMove = this
+            .enemy
+            .getMove();
+        let resolution = Object(__WEBPACK_IMPORTED_MODULE_2__information_resolutions__["a" /* default */])(move.move, enemyMove.move);
+        this.handleHp(resolution);
+        let previous = document.getElementsByClassName('announce')[0];
+        if (previous) {
+            previous.remove();
+        }
+        let announce = document.createElement("DIV");
+        announce.innerText = resolution.string;
+        announce.setAttribute("class", "announce");
+        let sky = document.getElementsByClassName('sky')[0];
+        sky.appendChild(announce);
+    }
+
+    handleHp(resolution) {
+        this.player.hitPoints -= resolution.player;
+        this.enemy.hitPoints -= resolution.enemy;
+        if (this.enemy.hitPoints > 50) 
+            this.enemy.hitPoints = 50;
+        if (this.player.hitPoints > 50) 
+            this.player.hitPoints = 50;
+        let pHealth = document.getElementsByClassName(this.player.identifier)[0];
+        pHealth.style.width = `${ (this.player.hitPoints * 100) / 50}%`;
+        let eHealth = document.getElementsByClassName(this.enemy.identifier)[0];
+        eHealth.style.width = `${ (this.enemy.hitPoints * 100) / 50}%`;
+        setTimeout(this.checkWinner, 1000);
+    }
+
+    checkWinner() {
+        console.log(__WEBPACK_IMPORTED_MODULE_3__modals__["a" /* gameOverModal */]);
+        if (!this.enemy.alive()) {
+            this
+                .enemy
+                .renderDeath(10);
+
+            Object(__WEBPACK_IMPORTED_MODULE_3__modals__["a" /* gameOverModal */])("Congratulats, you won!!!", this);
+        } else if (!this.player.alive()) {
+            this
+                .player
+                .renderDeath(10);
+            Object(__WEBPACK_IMPORTED_MODULE_3__modals__["a" /* gameOverModal */])("I'm Sorry, you died", this);
+        }
+    }
+
+    // gameOver(gOMsg) {     console.log("gameOver");     let game =
+    // document.getElementsByClassName("game")[0];     let modalBackground =
+    // document.createElement("DIV");     modalBackground.setAttribute("class",
+    // "modal-background");     game.appendChild(modalBackground);     let modal =
+    // document.createElement("div");     modal.setAttribute("class", "announce
+    // modal");     console.log(modal);     modal.innerHTML += gOMsg;
+    // modalBackground.appendChild(modal); }
+}
+/* harmony default export */ __webpack_exports__["a"] = (battle);
+
+/***/ }),
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -745,13 +730,13 @@ const ee = {
 /* harmony default export */ __webpack_exports__["a"] = (getResolution);
 
 /***/ }),
-/* 9 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__character__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__information_characters__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__game__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__character__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__information_characters__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__game__ = __webpack_require__(2);
 
 
 
@@ -773,7 +758,7 @@ const gameOverModal = (message, battle) => {
     modal.appendChild(goButtons);
     let playAgainButton = document.createElement("div");
     playAgainButton.innerHTML = "Play Again";
-    playAgainButton.setAttribute("class", "play-again-button");
+    playAgainButton.setAttribute("class", "button");
     playAgainButton.addEventListener("click", () => {
         let moveLi = document.getElementsByClassName("moves-list")[0];
         console.log(moveLi);
@@ -783,6 +768,8 @@ const gameOverModal = (message, battle) => {
         enemies.innerHTML = '';
         let player = document.getElementsByClassName("player-chars")[0];
         player.innerHTML = '';
+        let announce = document.getElementsByClassName("announce")[0];
+        announce.remove();
         modalBackground.remove();
         Object(__WEBPACK_IMPORTED_MODULE_2__game__["startGame"])();
     });
@@ -791,6 +778,46 @@ const gameOverModal = (message, battle) => {
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = gameOverModal;
 
+
+const informationModal = () => {
+    let game = document.getElementsByClassName("game")[0];
+    let modalBackground = document.createElement("DIV");
+    modalBackground.setAttribute("class", "modal-background");
+    game.appendChild(modalBackground);
+    let modal = document.createElement("div");
+    modal.setAttribute("class", "announce modal");
+    modalBackground.appendChild(modal);
+    let image = document.createElement("img");
+    image.src = "/Users/jonathanhalloran/Desktop/Browser-RPG/assets/moves/moveChart.png";
+    modal.appendChild(image);
+    let gotItButton = document.createElement('div');
+    gotItButton.innerHTML = "Got it";
+    gotItButton.setAttribute("class", "button");
+    gotItButton.addEventListener("click", () => {
+        modalBackground.remove();
+    });
+    modal.appendChild(gotItButton);
+
+};
+/* harmony export (immutable) */ __webpack_exports__["b"] = informationModal;
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__character__ = __webpack_require__(0);
+
+
+class playerCharacter extends __WEBPACK_IMPORTED_MODULE_0__character__["a" /* default */] {
+    constructor(initialization, enemyIncrement) {
+        super(initialization, enemyIncrement);
+        this.equipement = initialization.equipment;
+    }
+}
+
+/* unused harmony default export */ var _unused_webpack_default_export = (playerCharacter);
 
 /***/ })
 /******/ ]);

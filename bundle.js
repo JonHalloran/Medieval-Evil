@@ -770,7 +770,7 @@ const gameOverModal = (message, battle) => {
         let announce = document.getElementsByClassName("announce")[0];
         announce.remove();
         modalBackground.remove();
-        Object(__WEBPACK_IMPORTED_MODULE_2__game__["startGame"])();
+        startGameModal();
     });
 
     goButtons.appendChild(playAgainButton);

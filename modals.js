@@ -32,7 +32,7 @@ export const gameOverModal = (message, battle) => {
         let announce = document.getElementsByClassName("announce")[0];
         announce.remove();
         modalBackground.remove();
-        startGame();
+        startGameModal();
     });
 
     goButtons.appendChild(playAgainButton);

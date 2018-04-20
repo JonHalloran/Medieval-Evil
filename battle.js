@@ -76,7 +76,6 @@ class battle {
     }
 
     checkWinner() {
-        console.log(gameOverModal);
         if (!this.enemy.alive()) {
             this
                 .enemy
@@ -90,13 +89,5 @@ class battle {
             gameOverModal("I'm Sorry, you died", this);
         }
     }
-
-    // gameOver(gOMsg) {     console.log("gameOver");     let game =
-    // document.getElementsByClassName("game")[0];     let modalBackground =
-    // document.createElement("DIV");     modalBackground.setAttribute("class",
-    // "modal-background");     game.appendChild(modalBackground);     let modal =
-    // document.createElement("div");     modal.setAttribute("class", "announce
-    // modal");     console.log(modal);     modal.innerHTML += gOMsg;
-    // modalBackground.appendChild(modal); }
 }
 export default battle;

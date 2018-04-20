@@ -456,7 +456,6 @@ class battle {
     }
 
     checkWinner() {
-        console.log(__WEBPACK_IMPORTED_MODULE_3__modals__["a" /* gameOverModal */]);
         if (!this.enemy.alive()) {
             this
                 .enemy
@@ -470,14 +469,6 @@ class battle {
             Object(__WEBPACK_IMPORTED_MODULE_3__modals__["a" /* gameOverModal */])("I'm Sorry, you died", this);
         }
     }
-
-    // gameOver(gOMsg) {     console.log("gameOver");     let game =
-    // document.getElementsByClassName("game")[0];     let modalBackground =
-    // document.createElement("DIV");     modalBackground.setAttribute("class",
-    // "modal-background");     game.appendChild(modalBackground);     let modal =
-    // document.createElement("div");     modal.setAttribute("class", "announce
-    // modal");     console.log(modal);     modal.innerHTML += gOMsg;
-    // modalBackground.appendChild(modal); }
 }
 /* harmony default export */ __webpack_exports__["a"] = (battle);
 

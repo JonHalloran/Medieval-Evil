@@ -137,7 +137,7 @@ class character {
         }
         if (start !== end) {
             context.drawImage(image, start, move.render.height + this.enemyIncrement, 64, 64, 50, 0, 200, 200);
-            setTimeout(() => this.renderMove((start + move.render.step), move), 100);
+            setTimeout(() => this.renderMove((start + move.render.step), move), 50);
         } else {
             context.drawImage(image, this.rendStart, this.rendHeight + this.enemyIncrement, 64, 64, 50, 0, 200, 200);
         }
@@ -272,13 +272,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-document.addEventListener("DOMContentLoaded", () => startGame());
+document.addEventListener("DOMContentLoaded", () => {
+    startGame();
+    let questionButton = document.getElementsByClassName("question-button")[0];
+    questionButton.addEventListener('click', () => Object(__WEBPACK_IMPORTED_MODULE_4__modals__["b" /* informationModal */])());
+});
 
 const startGame = () => {
     let player = new __WEBPACK_IMPORTED_MODULE_2__character__["a" /* default */](__WEBPACK_IMPORTED_MODULE_3__information_characters__["golden"], 0);
     new __WEBPACK_IMPORTED_MODULE_0__battle__["a" /* default */](player);
-    let questionButton = document.getElementsByClassName("question-button")[0];
-    questionButton.addEventListener('click', () => Object(__WEBPACK_IMPORTED_MODULE_4__modals__["b" /* informationModal */])());
 };
 /* harmony export (immutable) */ __webpack_exports__["startGame"] = startGame;
 
@@ -452,7 +454,8 @@ class battle {
         pHealth.style.width = `${ (this.player.hitPoints * 100) / 50}%`;
         let eHealth = document.getElementsByClassName(this.enemy.identifier)[0];
         eHealth.style.width = `${ (this.enemy.hitPoints * 100) / 50}%`;
-        setTimeout(this.checkWinner, 1000);
+        setTimeout(this.checkWinner, 500);
+        // this.checkWinner();
     }
 
     checkWinner() {

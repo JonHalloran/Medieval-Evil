@@ -72,7 +72,8 @@ class battle {
         pHealth.style.width = `${ (this.player.hitPoints * 100) / 50}%`;
         let eHealth = document.getElementsByClassName(this.enemy.identifier)[0];
         eHealth.style.width = `${ (this.enemy.hitPoints * 100) / 50}%`;
-        setTimeout(this.checkWinner, 1000);
+        setTimeout(this.checkWinner, 500);
+        // this.checkWinner();
     }
 
     checkWinner() {

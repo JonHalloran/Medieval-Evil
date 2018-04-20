@@ -67,7 +67,7 @@ class character {
         }
         if (start !== end) {
             context.drawImage(image, start, move.render.height + this.enemyIncrement, 64, 64, 50, 0, 200, 200);
-            setTimeout(() => this.renderMove((start + move.render.step), move), 100);
+            setTimeout(() => this.renderMove((start + move.render.step), move), 50);
         } else {
             context.drawImage(image, this.rendStart, this.rendHeight + this.enemyIncrement, 64, 64, 50, 0, 200, 200);
         }

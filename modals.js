@@ -56,5 +56,18 @@ export const informationModal = () => {
         modalBackground.remove();
     });
     modal.appendChild(gotItButton);
+};
 
+export const startGameModal = () => {
+    let game = document.getElementsByClassName("game")[0];
+    let modalBackground = document.createElement("DIV");
+    modalBackground.setAttribute("class", "modal-background");
+    game.appendChild(modalBackground);
+    let modal = document.createElement("div");
+    modal.setAttribute("class", "announce modal");
+    modalBackground.appendChild(modal);
+    let startButton = document.createElement("DIV");
+    startButton.innerHTML = "Start Game";
+    startButton.setAttribute("class", "start-button button");
+    modal.appendChild(startButton);
 };

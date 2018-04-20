@@ -273,9 +273,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    startGame();
+    // startGame();
     let questionButton = document.getElementsByClassName("question-button")[0];
     questionButton.addEventListener('click', () => Object(__WEBPACK_IMPORTED_MODULE_4__modals__["b" /* informationModal */])());
+    Object(__WEBPACK_IMPORTED_MODULE_4__modals__["c" /* startGameModal */])();
+    let newGame = document.getElementsByClassName("start-button")[0];
+    newGame.addEventListener("click", () => {
+        startGame();
+        let modalBackground = document.getElementsByClassName("modal-background")[0];
+        modalBackground.remove();
+    });
 });
 
 const startGame = () => {
@@ -791,9 +798,24 @@ const informationModal = () => {
         modalBackground.remove();
     });
     modal.appendChild(gotItButton);
-
 };
 /* harmony export (immutable) */ __webpack_exports__["b"] = informationModal;
+
+
+const startGameModal = () => {
+    let game = document.getElementsByClassName("game")[0];
+    let modalBackground = document.createElement("DIV");
+    modalBackground.setAttribute("class", "modal-background");
+    game.appendChild(modalBackground);
+    let modal = document.createElement("div");
+    modal.setAttribute("class", "announce modal");
+    modalBackground.appendChild(modal);
+    let startButton = document.createElement("DIV");
+    startButton.innerHTML = "Start Game";
+    startButton.setAttribute("class", "start-button button");
+    modal.appendChild(startButton);
+};
+/* harmony export (immutable) */ __webpack_exports__["c"] = startGameModal;
 
 
 /***/ }),

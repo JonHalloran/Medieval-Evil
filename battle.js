@@ -75,16 +75,16 @@ class battle {
                 .enemy
                 .renderDeath(10);
 
-            this.gameOver();
+            this.gameOver("Congratulats, you won!!!");
         } else if (!this.player.alive()) {
             this
                 .player
                 .renderDeath(10);
-            this.gameOver();
+            this.gameOver("I'm Sorry, you died");
         }
     }
 
-    gameOver() {
+    gameOver(gOMsg) {
         console.log("gameOver");
         let game = document.getElementsByClassName("game")[0];
         let modalBackground = document.createElement("DIV");
@@ -93,6 +93,8 @@ class battle {
 
         let modal = document.createElement("div");
         modal.setAttribute("class", "announce modal");
+        console.log(modal);
+        modal.innerHTML += gOMsg;
         modalBackground.appendChild(modal);
     }
 }

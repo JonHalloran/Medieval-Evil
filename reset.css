@@ -3,6 +3,11 @@
    License: none (public domain)
 */
 
+/* @font-face {
+    font-family: 'eight-bit';
+    src: url('./font/8-BIT WONDER.TTF');
+} */
+
 html,
 body,
 div,
@@ -91,6 +96,8 @@ video {
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
+    font-family: "eight-bit", Times, serif;
+    font-family: 'Press Start 2P', cursive;
 }
 
 /* HTML5 display-role reset for older browsers */

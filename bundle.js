@@ -71,7 +71,9 @@
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__battle__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__playerCharacter__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__information_characters__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__character__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__information_characters__ = __webpack_require__(7);
+
 
 
 
@@ -79,9 +81,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 document.addEventListener("DOMContentLoaded", () => startGame());
 
 const startGame = () => {
-    let player = new __WEBPACK_IMPORTED_MODULE_1__playerCharacter__["a" /* default */](__WEBPACK_IMPORTED_MODULE_2__information_characters__["a" /* golden */], 0);
+    let player = new __WEBPACK_IMPORTED_MODULE_2__character__["a" /* default */](__WEBPACK_IMPORTED_MODULE_3__information_characters__["a" /* golden */], 0);
     new __WEBPACK_IMPORTED_MODULE_0__battle__["a" /* default */](player);
 };
+/* harmony export (immutable) */ __webpack_exports__["startGame"] = startGame;
+
 
 /***/ }),
 /* 1 */
@@ -91,6 +95,8 @@ const startGame = () => {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__information_characters__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__character__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__information_resolutions__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals__ = __webpack_require__(9);
+
 
 
 
@@ -163,17 +169,18 @@ class battle {
     }
 
     checkWinner() {
+        console.log(__WEBPACK_IMPORTED_MODULE_3__modals__["a" /* gameOverModal */]);
         if (!this.enemy.alive()) {
             this
                 .enemy
                 .renderDeath(10);
 
-            this.gameOver("Congratulats, you won!!!");
+            Object(__WEBPACK_IMPORTED_MODULE_3__modals__["a" /* gameOverModal */])("Congratulats, you won!!!", this);
         } else if (!this.player.alive()) {
             this
                 .player
                 .renderDeath(10);
-            this.gameOver("I'm Sorry, you died");
+            Object(__WEBPACK_IMPORTED_MODULE_3__modals__["a" /* gameOverModal */])("I'm Sorry, you died", this);
         }
     }
 
@@ -288,7 +295,7 @@ const parry = {
 class character {
     constructor(initializaton, enemyIncrement) {
         this.moves = initializaton.moves;
-        this.hitPoints = 10;
+        this.hitPoints = 50;
         this.sprites = initializaton.sprites;
         this.rendStart = initializaton.render.start;
         this.rendStep = initializaton.render.step;
@@ -394,7 +401,7 @@ class playerCharacter extends __WEBPACK_IMPORTED_MODULE_0__character__["a" /* de
     }
 }
 
-/* harmony default export */ __webpack_exports__["a"] = (playerCharacter);
+/* unused harmony default export */ var _unused_webpack_default_export = (playerCharacter);
 
 /***/ }),
 /* 7 */
@@ -736,6 +743,54 @@ const ee = {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (getResolution);
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__character__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__information_characters__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__game__ = __webpack_require__(0);
+
+
+
+
+const gameOverModal = (message, battle) => {
+    console.log("gameOver");
+    let game = document.getElementsByClassName("game")[0];
+    let modalBackground = document.createElement("DIV");
+    modalBackground.setAttribute("class", "modal-background");
+    game.appendChild(modalBackground);
+    let modal = document.createElement("div");
+    modal.setAttribute("class", "announce modal");
+    modalBackground.appendChild(modal);
+    let goMsg = document.createElement("DIV");
+    goMsg.innerHTML += message;
+    modal.appendChild(goMsg);
+    let goButtons = document.createElement("DIV");
+    goButtons.setAttribute("class", "go-buttons");
+    modal.appendChild(goButtons);
+    let playAgainButton = document.createElement("div");
+    playAgainButton.innerHTML = "Play Again";
+    playAgainButton.setAttribute("class", "play-again-button");
+    playAgainButton.addEventListener("click", () => {
+        let moveLi = document.getElementsByClassName("moves-list")[0];
+        console.log(moveLi);
+        while (moveLi.firstChild) 
+            moveLi.removeChild(moveLi.firstChild);
+        let enemies = document.getElementsByClassName("enemy-chars")[0];
+        enemies.innerHTML = '';
+        let player = document.getElementsByClassName("player-chars")[0];
+        player.innerHTML = '';
+        modalBackground.remove();
+        Object(__WEBPACK_IMPORTED_MODULE_2__game__["startGame"])();
+    });
+
+    goButtons.appendChild(playAgainButton);
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = gameOverModal;
+
 
 /***/ })
 /******/ ]);

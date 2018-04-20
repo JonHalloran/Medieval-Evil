@@ -1,6 +1,7 @@
 import * as characters from "./information/characters";
 import character from "./character";
 import getResolution from "./information/resolutions";
+import {gameOverModal} from "./modals";
 
 class battle {
     constructor(character1, character2) {
@@ -70,17 +71,18 @@ class battle {
     }
 
     checkWinner() {
+        console.log(gameOverModal);
         if (!this.enemy.alive()) {
             this
                 .enemy
                 .renderDeath(10);
 
-            this.gameOver("Congratulats, you won!!!");
+            gameOverModal("Congratulats, you won!!!", this);
         } else if (!this.player.alive()) {
             this
                 .player
                 .renderDeath(10);
-            this.gameOver("I'm Sorry, you died");
+            gameOverModal("I'm Sorry, you died", this);
         }
     }
 

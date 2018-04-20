@@ -1,7 +1,7 @@
 class character {
     constructor(initializaton, enemyIncrement) {
         this.moves = initializaton.moves;
-        this.hitPoints = 10;
+        this.hitPoints = 50;
         this.sprites = initializaton.sprites;
         this.rendStart = initializaton.render.start;
         this.rendStep = initializaton.render.step;

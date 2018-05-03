@@ -3,7 +3,6 @@ import * as characters from "./information/characters";
 import {startGame} from "./game";
 
 export const gameOverModal = (message, battle) => {
-    console.log("gameOver");
     let game = document.getElementsByClassName("game")[0];
     let modalBackground = document.createElement("DIV");
     modalBackground.setAttribute("class", "modal-background");
@@ -22,7 +21,6 @@ export const gameOverModal = (message, battle) => {
     playAgainButton.setAttribute("class", "button");
     playAgainButton.addEventListener("click", () => {
         let moveLi = document.getElementsByClassName("moves-list")[0];
-        console.log(moveLi);
         while (moveLi.firstChild) 
             moveLi.removeChild(moveLi.firstChild);
         let enemies = document.getElementsByClassName("enemy-chars")[0];
@@ -43,19 +41,27 @@ export const informationModal = () => {
     let modalBackground = document.createElement("DIV");
     modalBackground.setAttribute("class", "modal-background");
     game.appendChild(modalBackground);
-    let modal = document.createElement("div");
-    modal.setAttribute("class", "announce modal");
-    modalBackground.appendChild(modal);
-    let image = document.createElement("img");
-    image.src = "./assets/moves/moveChart.png";
-    modal.appendChild(image);
+    let moveModal = document.createElement("div");
+    moveModal.setAttribute("class", "announce");
+    modalBackground.appendChild(moveModal);
+    let moveTitle = document.createElement("H3");
+    moveTitle.innerHTML = "move interactions";
+    moveTitle.setAttribute("class", "moves-modal-text");
+    moveModal.appendChild(moveTitle);
+    let moveInteractions = document.createElement("img");
+    moveInteractions.src = "./assets/moves/moveChart.png";
+    moveModal.appendChild(moveInteractions);
+    // let instructions = document.createElement('div');
+    // instructions.setAttribute("class", "moves-modal-text");
+    // instructions.innerHTML = "&#8665; fight by clicking on these buttons";
+    // moveModal.appendChild(instructions);
     let gotItButton = document.createElement('div');
     gotItButton.innerHTML = "Got it";
     gotItButton.setAttribute("class", "button");
     gotItButton.addEventListener("click", () => {
         modalBackground.remove();
     });
-    modal.appendChild(gotItButton);
+    moveModal.appendChild(gotItButton);
 };
 
 export const startGameModal = () => {
@@ -77,7 +83,6 @@ export const startGameModal = () => {
             let canvas = document.createElement("CANVAS");
             canvas.setAttribute("class", `canvas-${ind} choose-char`);
             characterUL.appendChild(canvas);
-            console.log(char);
             renderWalking(ind, 0, char.sprites);
             canvas.addEventListener("click", () => {
                 startGame(char);

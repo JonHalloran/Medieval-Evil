@@ -9,9 +9,7 @@ class battle {
         let enemies = Object.values(characters);
         let enemy = enemies[Math.floor(Math.random() * enemies.length)];
         // let enemy = enemies[3];
-        console.log(enemies);
         this.enemy = new character(enemy, -128);
-        console.log(enemy);
         this.addButtons(this.player);
         this
             .player

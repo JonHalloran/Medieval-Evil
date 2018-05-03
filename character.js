@@ -74,11 +74,9 @@ class character {
     }
 
     renderDeath(start) {
-        console.log("death", start);
         let canvas = document.getElementById(this.identifier);
         let context = canvas.getContext("2d");
         let image = new Image();
-        console.log(canvas, context, image);
         image.src = this.sprites;
 
         if (start <= 390) {

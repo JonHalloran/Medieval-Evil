@@ -144,11 +144,9 @@ class character {
     }
 
     renderDeath(start) {
-        console.log("death", start);
         let canvas = document.getElementById(this.identifier);
         let context = canvas.getContext("2d");
         let image = new Image();
-        console.log(canvas, context, image);
         image.src = this.sprites;
 
         if (start <= 390) {
@@ -389,7 +387,6 @@ const parry = {
 
 
 const gameOverModal = (message, battle) => {
-    console.log("gameOver");
     let game = document.getElementsByClassName("game")[0];
     let modalBackground = document.createElement("DIV");
     modalBackground.setAttribute("class", "modal-background");
@@ -408,7 +405,6 @@ const gameOverModal = (message, battle) => {
     playAgainButton.setAttribute("class", "button");
     playAgainButton.addEventListener("click", () => {
         let moveLi = document.getElementsByClassName("moves-list")[0];
-        console.log(moveLi);
         while (moveLi.firstChild) 
             moveLi.removeChild(moveLi.firstChild);
         let enemies = document.getElementsByClassName("enemy-chars")[0];
@@ -431,19 +427,27 @@ const informationModal = () => {
     let modalBackground = document.createElement("DIV");
     modalBackground.setAttribute("class", "modal-background");
     game.appendChild(modalBackground);
-    let modal = document.createElement("div");
-    modal.setAttribute("class", "announce modal");
-    modalBackground.appendChild(modal);
-    let image = document.createElement("img");
-    image.src = "./assets/moves/moveChart.png";
-    modal.appendChild(image);
+    let moveModal = document.createElement("div");
+    moveModal.setAttribute("class", "announce");
+    modalBackground.appendChild(moveModal);
+    let moveTitle = document.createElement("H3");
+    moveTitle.innerHTML = "move interactions";
+    moveTitle.setAttribute("class", "moves-modal-text");
+    moveModal.appendChild(moveTitle);
+    let moveInteractions = document.createElement("img");
+    moveInteractions.src = "./assets/moves/moveChart.png";
+    moveModal.appendChild(moveInteractions);
+    // let instructions = document.createElement('div');
+    // instructions.setAttribute("class", "moves-modal-text");
+    // instructions.innerHTML = "&#8665; fight by clicking on these buttons";
+    // moveModal.appendChild(instructions);
     let gotItButton = document.createElement('div');
     gotItButton.innerHTML = "Got it";
     gotItButton.setAttribute("class", "button");
     gotItButton.addEventListener("click", () => {
         modalBackground.remove();
     });
-    modal.appendChild(gotItButton);
+    moveModal.appendChild(gotItButton);
 };
 /* harmony export (immutable) */ __webpack_exports__["b"] = informationModal;
 
@@ -467,7 +471,6 @@ const startGameModal = () => {
             let canvas = document.createElement("CANVAS");
             canvas.setAttribute("class", `canvas-${ind} choose-char`);
             characterUL.appendChild(canvas);
-            console.log(char);
             renderWalking(ind, 0, char.sprites);
             canvas.addEventListener("click", () => {
                 Object(__WEBPACK_IMPORTED_MODULE_2__game__["startGame"])(char);
@@ -512,9 +515,7 @@ class battle {
         let enemies = Object.values(__WEBPACK_IMPORTED_MODULE_0__information_characters__);
         let enemy = enemies[Math.floor(Math.random() * enemies.length)];
         // let enemy = enemies[3];
-        console.log(enemies);
         this.enemy = new __WEBPACK_IMPORTED_MODULE_1__character__["a" /* default */](enemy, -128);
-        console.log(enemy);
         this.addButtons(this.player);
         this
             .player

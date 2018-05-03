@@ -63,7 +63,10 @@ export const startGameModal = () => {
     let modalBackground = document.createElement("DIV");
     modalBackground.setAttribute("class", "start-background");
     game.appendChild(modalBackground);
-    let startHeader = document.createElement("H1");
+    let title = document.createElement("H1");
+    title.innerHTML = "MEDIEVAL EVIL";
+    modalBackground.appendChild(title);
+    let startHeader = document.createElement("H2");
     startHeader.innerHTML = "CHOOSE A CHARACTER";
     modalBackground.appendChild(startHeader);
     let characterUL = document.createElement("UL");

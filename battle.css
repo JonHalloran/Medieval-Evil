@@ -176,9 +176,14 @@ span {
 }
 
 h1 {
+    font-size: 40px;
+    color: white;
+    margin-bottom: 10vh;
+}
+h2 {
     font-size: 30px;
     color: white;
-    margin-bottom: 25vh;
+    margin-bottom: 10vh;
 }
 
 .choose-char:hover {

@@ -261,11 +261,11 @@ const steel = {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__battle__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__battle__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__playerCharacter__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__character__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__information_characters__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modals__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modals__ = __webpack_require__(4);
 
 
 
@@ -381,10 +381,126 @@ const parry = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__character__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__information_characters__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__game__ = __webpack_require__(2);
+
+
+
+
+const gameOverModal = (message, battle) => {
+    console.log("gameOver");
+    let game = document.getElementsByClassName("game")[0];
+    let modalBackground = document.createElement("DIV");
+    modalBackground.setAttribute("class", "modal-background");
+    game.appendChild(modalBackground);
+    let modal = document.createElement("div");
+    modal.setAttribute("class", "announce modal");
+    modalBackground.appendChild(modal);
+    let goMsg = document.createElement("DIV");
+    goMsg.innerHTML += message;
+    modal.appendChild(goMsg);
+    let goButtons = document.createElement("DIV");
+    goButtons.setAttribute("class", "go-buttons");
+    modal.appendChild(goButtons);
+    let playAgainButton = document.createElement("div");
+    playAgainButton.innerHTML = "Play Again";
+    playAgainButton.setAttribute("class", "button");
+    playAgainButton.addEventListener("click", () => {
+        let moveLi = document.getElementsByClassName("moves-list")[0];
+        console.log(moveLi);
+        while (moveLi.firstChild) 
+            moveLi.removeChild(moveLi.firstChild);
+        let enemies = document.getElementsByClassName("enemy-chars")[0];
+        enemies.innerHTML = '';
+        let player = document.getElementsByClassName("player-chars")[0];
+        player.innerHTML = '';
+        let announce = document.getElementsByClassName("announce")[0];
+        announce.remove();
+        modalBackground.remove();
+        startGameModal();
+    });
+
+    goButtons.appendChild(playAgainButton);
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = gameOverModal;
+
+
+const informationModal = () => {
+    let game = document.getElementsByClassName("game")[0];
+    let modalBackground = document.createElement("DIV");
+    modalBackground.setAttribute("class", "modal-background");
+    game.appendChild(modalBackground);
+    let modal = document.createElement("div");
+    modal.setAttribute("class", "announce modal");
+    modalBackground.appendChild(modal);
+    let image = document.createElement("img");
+    image.src = "./assets/moves/moveChart.png";
+    modal.appendChild(image);
+    let gotItButton = document.createElement('div');
+    gotItButton.innerHTML = "Got it";
+    gotItButton.setAttribute("class", "button");
+    gotItButton.addEventListener("click", () => {
+        modalBackground.remove();
+    });
+    modal.appendChild(gotItButton);
+};
+/* harmony export (immutable) */ __webpack_exports__["b"] = informationModal;
+
+
+const startGameModal = () => {
+    let game = document.getElementsByClassName("game")[0];
+    let modalBackground = document.createElement("DIV");
+    modalBackground.setAttribute("class", "start-background");
+    game.appendChild(modalBackground);
+    let title = document.createElement("H1");
+    title.innerHTML = "MEDIEVAL EVIL";
+    modalBackground.appendChild(title);
+    let startHeader = document.createElement("H2");
+    startHeader.innerHTML = "CHOOSE A CHARACTER";
+    modalBackground.appendChild(startHeader);
+    let characterUL = document.createElement("UL");
+    modalBackground.appendChild(characterUL);
+    Object
+        .values(__WEBPACK_IMPORTED_MODULE_1__information_characters__)
+        .forEach((char, ind) => {
+            let canvas = document.createElement("CANVAS");
+            canvas.setAttribute("class", `canvas-${ind} choose-char`);
+            characterUL.appendChild(canvas);
+            console.log(char);
+            renderWalking(ind, 0, char.sprites);
+            canvas.addEventListener("click", () => {
+                Object(__WEBPACK_IMPORTED_MODULE_2__game__["startGame"])(char);
+                modalBackground.remove();
+            });
+        });
+};
+/* harmony export (immutable) */ __webpack_exports__["c"] = startGameModal;
+
+
+const renderWalking = (index, start, spriteSrc) => {
+    let canvas = document.getElementsByClassName(`canvas-${index}`)[0];
+    if (!canvas) 
+        return null;
+    let context = canvas.getContext("2d");
+    canvas.style.width = "150px";
+    canvas.style.height = "150px";
+    let image = new Image();
+    image.src = spriteSrc;
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(image, start, 649, 64, 64, 75, 0, 150, 150);
+    setTimeout(() => renderWalking(index, (start + 64) % 384, spriteSrc), 100);
+};
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__information_characters__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__character__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__information_resolutions__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__information_resolutions__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals__ = __webpack_require__(4);
 
 
 
@@ -481,7 +597,7 @@ class battle {
 /* harmony default export */ __webpack_exports__["a"] = (battle);
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -727,119 +843,6 @@ const ee = {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (getResolution);
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__character__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__information_characters__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__game__ = __webpack_require__(2);
-
-
-
-
-const gameOverModal = (message, battle) => {
-    console.log("gameOver");
-    let game = document.getElementsByClassName("game")[0];
-    let modalBackground = document.createElement("DIV");
-    modalBackground.setAttribute("class", "modal-background");
-    game.appendChild(modalBackground);
-    let modal = document.createElement("div");
-    modal.setAttribute("class", "announce modal");
-    modalBackground.appendChild(modal);
-    let goMsg = document.createElement("DIV");
-    goMsg.innerHTML += message;
-    modal.appendChild(goMsg);
-    let goButtons = document.createElement("DIV");
-    goButtons.setAttribute("class", "go-buttons");
-    modal.appendChild(goButtons);
-    let playAgainButton = document.createElement("div");
-    playAgainButton.innerHTML = "Play Again";
-    playAgainButton.setAttribute("class", "button");
-    playAgainButton.addEventListener("click", () => {
-        let moveLi = document.getElementsByClassName("moves-list")[0];
-        console.log(moveLi);
-        while (moveLi.firstChild) 
-            moveLi.removeChild(moveLi.firstChild);
-        let enemies = document.getElementsByClassName("enemy-chars")[0];
-        enemies.innerHTML = '';
-        let player = document.getElementsByClassName("player-chars")[0];
-        player.innerHTML = '';
-        let announce = document.getElementsByClassName("announce")[0];
-        announce.remove();
-        modalBackground.remove();
-        startGameModal();
-    });
-
-    goButtons.appendChild(playAgainButton);
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = gameOverModal;
-
-
-const informationModal = () => {
-    let game = document.getElementsByClassName("game")[0];
-    let modalBackground = document.createElement("DIV");
-    modalBackground.setAttribute("class", "modal-background");
-    game.appendChild(modalBackground);
-    let modal = document.createElement("div");
-    modal.setAttribute("class", "announce modal");
-    modalBackground.appendChild(modal);
-    let image = document.createElement("img");
-    image.src = "./assets/moves/moveChart.png";
-    modal.appendChild(image);
-    let gotItButton = document.createElement('div');
-    gotItButton.innerHTML = "Got it";
-    gotItButton.setAttribute("class", "button");
-    gotItButton.addEventListener("click", () => {
-        modalBackground.remove();
-    });
-    modal.appendChild(gotItButton);
-};
-/* harmony export (immutable) */ __webpack_exports__["b"] = informationModal;
-
-
-const startGameModal = () => {
-    let game = document.getElementsByClassName("game")[0];
-    let modalBackground = document.createElement("DIV");
-    modalBackground.setAttribute("class", "start-background");
-    game.appendChild(modalBackground);
-    let startHeader = document.createElement("H1");
-    startHeader.innerHTML = "CHOOSE A CHARACTER";
-    modalBackground.appendChild(startHeader);
-    let characterUL = document.createElement("UL");
-    modalBackground.appendChild(characterUL);
-    Object
-        .values(__WEBPACK_IMPORTED_MODULE_1__information_characters__)
-        .forEach((char, ind) => {
-            let canvas = document.createElement("CANVAS");
-            canvas.setAttribute("class", `canvas-${ind} choose-char`);
-            characterUL.appendChild(canvas);
-            console.log(char);
-            renderWalking(ind, 0, char.sprites);
-            canvas.addEventListener("click", () => {
-                Object(__WEBPACK_IMPORTED_MODULE_2__game__["startGame"])(char);
-                modalBackground.remove();
-            });
-        });
-};
-/* harmony export (immutable) */ __webpack_exports__["c"] = startGameModal;
-
-
-const renderWalking = (index, start, spriteSrc) => {
-    let canvas = document.getElementsByClassName(`canvas-${index}`)[0];
-    if (!canvas) 
-        return null;
-    let context = canvas.getContext("2d");
-    canvas.style.width = "150px";
-    canvas.style.height = "150px";
-    let image = new Image();
-    image.src = spriteSrc;
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    context.drawImage(image, start, 649, 64, 64, 75, 0, 150, 150);
-    setTimeout(() => renderWalking(index, (start + 64) % 384, spriteSrc), 100);
-};
 
 /***/ }),
 /* 7 */

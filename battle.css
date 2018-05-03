@@ -197,3 +197,19 @@ h2 {
     margin-bottom: 10px;
     max-width: 25 vw;
 }
+
+.instruction-text {
+    text-transform: uppercase;
+}
+
+.moves-modal-with-arrow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.arrow {
+    font-size: 40px;
+    margin-top: -10px;
+    padding-right: 10px;
+}
